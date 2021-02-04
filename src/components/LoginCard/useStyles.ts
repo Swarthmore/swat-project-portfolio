@@ -13,5 +13,5 @@ export const useStyles = makeStyles(theme => ({
         right: "20px",
         width: "400px",
         background: theme.palette.background.paper
-    }
+    },
 }))
