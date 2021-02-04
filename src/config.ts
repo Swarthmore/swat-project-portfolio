@@ -21,3 +21,8 @@ export const rrfConfig = {
     userProfile: 'users',
     useFirestoreForProfile: true
 }
+
+// app config
+export const appConfig = {
+    name: "Goose Emporium"
+}
