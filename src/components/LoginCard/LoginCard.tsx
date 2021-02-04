@@ -3,6 +3,7 @@
  * 
  * This component provides a login card that when clicked, will allow
  * a user to login to their Google account.
+ * 
  */
 
 import * as React from "react";

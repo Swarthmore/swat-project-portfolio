@@ -19,6 +19,7 @@ import {
     Switch,
     Route
 } from "react-router-dom";
+import Navbar from "./components/Navbar/Navbar";
 
 // react-redux-firebase props
 const rrfProps = {
@@ -34,6 +35,7 @@ export default function App() {
             <ReactReduxFirebaseProvider {...rrfProps}>
                 <BrowserRouter>
                     <CssBaseline/>
+                    <Navbar/>
                     <Switch>
                         <Route exact path="/" component={LandingPage} />
                     </Switch>
