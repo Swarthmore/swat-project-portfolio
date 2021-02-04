@@ -13,6 +13,12 @@ import { createFirestoreInstance } from "redux-firestore";
 import { Provider } from "react-redux";
 import { ReactReduxFirebaseProvider } from "react-redux-firebase";
 import { CssBaseline } from "@material-ui/core";
+import LandingPage from "./components/LandingPage/LandingPage";
+import {
+    BrowserRouter,
+    Switch,
+    Route
+} from "react-router-dom";
 
 // react-redux-firebase props
 const rrfProps = {
@@ -26,8 +32,12 @@ export default function App() {
     return (
         <Provider store={store}>
             <ReactReduxFirebaseProvider {...rrfProps}>
-                <CssBaseline/>
-                <h1>Hello world</h1>
+                <BrowserRouter>
+                    <CssBaseline/>
+                    <Switch>
+                        <Route exact path="/" component={LandingPage} />
+                    </Switch>
+                </BrowserRouter>
             </ReactReduxFirebaseProvider>
         </Provider>
     )
