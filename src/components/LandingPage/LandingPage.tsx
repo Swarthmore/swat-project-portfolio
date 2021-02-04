@@ -12,6 +12,7 @@ import LoginCard from "../LoginCard/LoginCard";
 import { useSelector } from "react-redux";
 import { isLoaded, isEmpty } from "react-redux-firebase";
 import { RootState } from "../../reducer";
+import ProjectForm from "../ProjectForm/ProjectForm";
 
 export default function LandingPage() {
 
@@ -22,7 +23,7 @@ export default function LandingPage() {
             {!isLoaded(auth) 
                 ? <span>Loading...</span>
                     : isEmpty(auth) 
-                        ? <LoginCard /> : <></>
+                        ? <LoginCard /> : <ProjectForm onSubmit={() => console.log("submitted")} />
             }
         </Container>
     )

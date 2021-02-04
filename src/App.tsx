@@ -20,6 +20,8 @@ import {
     Route
 } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
 
 // react-redux-firebase props
 const rrfProps = {
@@ -33,13 +35,15 @@ export default function App() {
     return (
         <Provider store={store}>
             <ReactReduxFirebaseProvider {...rrfProps}>
-                <BrowserRouter>
-                    <CssBaseline/>
-                    <Navbar/>
-                    <Switch>
-                        <Route exact path="/" component={LandingPage} />
-                    </Switch>
-                </BrowserRouter>
+                <MuiPickersUtilsProvider utils={MomentUtils}>
+                    <BrowserRouter>
+                        <CssBaseline/>
+                        <Navbar/>
+                        <Switch>
+                            <Route exact path="/" component={LandingPage} />
+                        </Switch>
+                    </BrowserRouter>
+                </MuiPickersUtilsProvider>
             </ReactReduxFirebaseProvider>
         </Provider>
     )
