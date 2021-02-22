@@ -11,17 +11,14 @@ import * as React from "react";
 import useInput from "../../hooks/useInput";
 import { useFirestore } from "react-redux-firebase";
 import { useSelector } from "react-redux";
-import { Project } from "../types/Project";
+import { Project } from "../../types/Project";
 import { RootState } from "../../reducer"
 import { useStyles } from "./useStyles";
 import { DatePicker } from "@material-ui/pickers";
 import * as Markdown from "react-markdown";
+import { useHistory } from "react-router-dom";
 
-interface Props extends React.DetailedHTMLProps<React.FormHTMLAttributes<HTMLFormElement>, HTMLFormElement> {
-    onSubmit: () => void
-}
-
-export default function ProjectForm(props: Props) {
+export default function ProjectForm() {
 
     // whether or not to show markdown preview
     const [mdPreview, setMdPreview] = React.useState(false);
@@ -29,6 +26,8 @@ export default function ProjectForm(props: Props) {
     const firestore = useFirestore();
     const auth = useSelector((state: RootState) => state.firebase.auth);
     const classes = useStyles();
+
+    const history = useHistory();
 
     // the name field
     const { value: name, bind: bName, reset: rName } = useInput("");
@@ -78,8 +77,9 @@ export default function ProjectForm(props: Props) {
         await addProject(project)
         .then(res => {
             resetForm();
-            // call the onSubmit callback
-            props.onSubmit();
+            // redirect the user to the project page
+            const id = res.id;
+            history.push(`/projects/${id}`);
         })
         .catch(error => {
             console.error(error)
@@ -88,7 +88,7 @@ export default function ProjectForm(props: Props) {
     }
 
     return (
-        <form {...props} className={classes.root} onSubmit={onSubmit}>
+        <form className={classes.root} onSubmit={onSubmit}>
             <TextField className={classes.field} label="Enter a name for your project" variant="filled" required {...bName} />
             <TextField className={classes.field} label="Give your project a short description" variant="filled" required {...bShortDesc} />
             <DatePicker className={classes.field} format="MM/DD/yyyy" disablePast={true} {...bDeadline} />
