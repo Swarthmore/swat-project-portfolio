@@ -1,5 +1,5 @@
-import { TextField, Button } from "@material-ui/core";
-import * as React from "react";
+import { TextField, Button, Typography } from "@material-ui/core";
+import React from "react";
 import { useFirestore } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 import { Project } from "../../../types";
@@ -92,13 +92,16 @@ export default function AddProjectPage() {
     }
 
     return (
-        <form className={classes.root} onSubmit={onSubmit}>
-            <TextField className={classes.field} label="Enter a name for your project" variant="filled" required {...bindName} />
-            <TextField className={classes.field} label="Give your project a short description" variant="filled" required {...bindDescription} />
-            <DatePicker className={classes.field} format="MM/DD/yyyy" disablePast={true} {...bindDeadline} />
-            <TextField className={classes.field} label="Tell us about your project. You can use Markdown, but keep it under 400 characters" rows="10" rowsMax="10" variant="filled" multiline fullWidth {...bindMarkdown} />
-            <Button className={classes.button} type="submit">Submit</Button>
-        </form>
+        <div className={classes.root}>
+            <Typography variant="h3">Add Project</Typography>
+            <form className={classes.form} onSubmit={onSubmit}>
+                <TextField className={classes.field} label="Enter a name for your project" variant="filled" required {...bindName} />
+                <TextField className={classes.field} label="Give your project a short description" variant="filled" required {...bindDescription} />
+                <DatePicker className={classes.field} format="MM/DD/yyyy" disablePast={true} {...bindDeadline} />
+                <TextField className={classes.field} label="Tell us about your project. You can use Markdown, but keep it under 400 characters" rows="10" rowsMax="10" variant="filled" multiline fullWidth {...bindMarkdown} />
+                <Button className={classes.button} type="submit">Submit</Button>
+            </form>
+        </div>
     )
 
 }

@@ -6,10 +6,11 @@ export default makeStyles(theme => ({
     },
     content: {
         display: "flex",
-        flexGrow: 1
+        flexGrow: 1,
+        background: theme.palette.background.paper
     },
     children: {
         flexGrow: 1,
-        marginTop: theme.spacing(2)
+        padding: theme.spacing(4)
     }
 }));

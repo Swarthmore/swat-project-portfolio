@@ -2,10 +2,12 @@ import { makeStyles } from "@material-ui/core"
 
 export default makeStyles(theme => ({
     root: {
-        display: "flex",
-        flexDirection: "column",
         maxWidth: "500px",
         flexGrow: 1
+    },
+    form: {
+        display: "flex",
+        flexDirection: "column",
     },
     field: {
         marginTop: theme.spacing(1)

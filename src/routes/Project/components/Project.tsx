@@ -1,6 +1,5 @@
 import React from "react";
-import { Project } from "../../../types";
-import { Typography } from "@material-ui/core";
+import { Typography, Divider } from "@material-ui/core";
 import styles from "./styles";
 import { useParams, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -47,7 +46,12 @@ export default function ProjectPage() {
             <Typography variant="h2">{project.name}</Typography>
             <Typography variant="subtitle1">Started on {project.meta.createdOn}</Typography>
             <Typography variant="subtitle2">{project.description}</Typography>
-            {project.markdown && <ReactMarkdown>{project.markdown}</ReactMarkdown>}
+            {project.markdown && (
+                <>
+                    <Divider className={classes.divider} />
+                    <ReactMarkdown>{project.markdown}</ReactMarkdown>
+                </>
+            )}
         </div>
     );
 
