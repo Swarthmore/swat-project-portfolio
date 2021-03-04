@@ -1,21 +1,13 @@
-/**
- * @description
- * 
- * This component provides a login card that when clicked, will allow
- * a user to login to their Google account.
- * 
- */
-
 import * as React from "react";
 import { useFirebase } from "react-redux-firebase";
 import { Card, CardContent, CardHeader, Button } from "@material-ui/core";
 import { appConfig } from "../../config";
-import { useStyles } from "./useStyles";
+import styles from "./styles";
 
 export default function LoginCard() {
 
     const firebase = useFirebase();
-    const classes = useStyles();
+    const classes = styles();
     
     function loginWithGoogle() {
         return firebase.login({ provider: "google", type: "popup" })

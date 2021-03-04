@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as Faker from "faker";
 import { Team } from "../../types";
 import { MenuList, MenuItem, Divider } from "@material-ui/core";
 import styles from "./styles";

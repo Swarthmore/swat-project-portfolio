@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./styles";
 import Props from "./props";
 import Navbar from "../../containers/Navbar";
-import LoginCard from "../../components/LoginCard";
+import LoginCard from "../../containers/LoginCard";
 import { useSelector } from "react-redux";
 import { isEmpty } from "react-redux-firebase";
 import SideMenu from "../../containers/SideMenu";
