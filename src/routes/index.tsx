@@ -6,6 +6,7 @@ import NotFoundRoute from "./NotFound";
 import ProjectsRoute from "./Projects";
 import AddProjectRoute from "./AddProject";
 import ProjectRoute from "./Project";
+import UserRoute from "./User";
 
 export default function createRoutes() {
 
@@ -16,7 +17,8 @@ export default function createRoutes() {
                 {[
                     AddProjectRoute,
                     ProjectsRoute,
-                    ProjectRoute
+                    ProjectRoute,
+                    UserRoute
                 ].map((settings: any, i) => (
                     <Route key={`Route-${i}`} {...settings} />
                 ))}

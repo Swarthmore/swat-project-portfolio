@@ -10,7 +10,8 @@ import { AppBar, Link, Toolbar, Typography } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { isLoaded, isEmpty } from "react-redux-firebase";
 import { RootState } from "../../store/reducer";
-import LogoutButton from "../../components/LogoutButton/LogoutButton";
+import LogoutButton from "./LogoutButton/LogoutButton";
+import ProfileButton from "./ProfileButton/ProfileButton";
 import styles from "./styles";
 import { appConfig } from "../../config";
 import { useHistory } from "react-router-dom";
@@ -31,6 +32,7 @@ export default function Navbar() {
             <Toolbar>
                 <Typography variant="h6" className={classes.title} color="inherit"><Link color="inherit" href="/" onClick={onClick}>{appConfig.name}</Link></Typography>
                 {/* Display the logout button if the user is logged in */}
+                {isLoaded(auth) && !isEmpty(auth) && <ProfileButton />}
                 {isLoaded(auth) && !isEmpty(auth) && <LogoutButton />}
             </Toolbar>
         </AppBar>

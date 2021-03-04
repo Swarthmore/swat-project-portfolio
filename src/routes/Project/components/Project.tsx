@@ -42,8 +42,6 @@ export default function ProjectPage() {
     // convert the project to an array
     [project] = Object.keys(project).map((key: string) => ({ id: key, ...project[key] }));
 
-    console.log(project);
-
     return (
         <div className={classes.root}>
             <Typography variant="h2">{project.name}</Typography>
