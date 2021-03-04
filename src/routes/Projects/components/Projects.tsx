@@ -1,6 +1,6 @@
 import * as React from "react";
 import styles from "./styles";
-import { useFirestoreConnect, populate, isLoaded, isEmpty, useFirestore } from "react-redux-firebase";
+import { useFirestoreConnect, populate, isLoaded, isEmpty } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Typography } from "@material-ui/core";
@@ -25,6 +25,16 @@ export default function Projects() {
 
     let projects = useSelector((state:any) => populate(state.firestore, "projects", populates));
 
+    // Show message while projects are loading
+    if (!isLoaded(projects)) {
+        return <div>Loading...</div>
+    }
+
+    // Show message if there is are no projects 
+    if (isEmpty(projects)) {
+        return <div>Projects empty</div>
+    }
+
     // convert to array
     if (projects) {
         projects = Object.keys(projects).map(key => ({ id: key, ...projects[key] }));
@@ -36,7 +46,7 @@ export default function Projects() {
     return (
         <div className={classes.root}>
             <Typography variant="h3">Project Board</Typography>
-            {projects.map((project: Project) => <ProjectCard key={project.id} project={project} />)}
+            {Array.isArray(projects) && projects.map((project: Project) => <div className={classes.row} key={project.id}><ProjectCard project={project} /></div>)}
         </div>
     );
 

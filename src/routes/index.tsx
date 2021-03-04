@@ -5,6 +5,7 @@ import HomeRoute from "./Home";
 import NotFoundRoute from "./NotFound";
 import ProjectsRoute from "./Projects";
 import AddProjectRoute from "./AddProject";
+import ProjectRoute from "./Project";
 
 export default function createRoutes() {
 
@@ -14,7 +15,8 @@ export default function createRoutes() {
                 <Route exact path={HomeRoute.path} component={() => <HomeRoute.component />} />
                 {[
                     AddProjectRoute,
-                    ProjectsRoute
+                    ProjectsRoute,
+                    ProjectRoute
                 ].map((settings: any, i) => (
                     <Route key={`Route-${i}`} {...settings} />
                 ))}
