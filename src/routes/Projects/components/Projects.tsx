@@ -9,6 +9,8 @@ import { Project } from "../../../types/index";
 
 export default function Projects() {
 
+    const [title, setTitle] = React.useState("Projects");
+
     const classes = styles();
 
     const params: { teamId: string } = useParams();
@@ -43,9 +45,29 @@ export default function Projects() {
         }
     }
 
+    // when the team id changes, make sure the page title is correct
+    // TODO: THIS IS BAD CHANGE THIS
+    React.useEffect(() => {
+
+        if (params.teamId === "2Ic0FR9LZ6njQ6xO54co") {
+            setTitle("Academic Technology Projects");
+        } else if (params.teamId === "6nwyDhn3F8chk9uPxfiv") {
+            setTitle("Web Team Projects");
+        } else if (params.teamId === "rmiNR7hL6VSVjJSJe61l") {
+            setTitle("AIS Projects");
+        } else if (params.teamId === "xJd3FTSNpudQ0eX5d8No") {
+            setTitle("Help Desk Projects");
+        } else if (params.teamId === "yigGHL5Xcdu0N8gcCGI0") {
+            setTitle("Networking Projects");
+        } else if (params.teamId === "all") {
+            setTitle("All Projects");
+        }
+
+    }, [params.teamId]);
+
     return (
         <div className={classes.root}>
-            <Typography variant="h3">Project Board</Typography>
+            <Typography variant="h3">{title}</Typography>
             {Array.isArray(projects) && projects.map((project: Project) => <div className={classes.row} key={project.id}><ProjectCard project={project} /></div>)}
         </div>
     );
