@@ -12,7 +12,7 @@ import "firebase/database";
 import "firebase/firestore";
 import "firebase/analytics";
 import { createStore } from "redux";
-import { fbConfig, rrfConfig } from "./config";
+import { fbConfig, rrfConfig } from "../config";
 import { rootReducer } from "./reducer";
 
 // initialize firebase
@@ -27,4 +27,4 @@ firebase.analytics();
 // initial state for this store
 const initialState = {}
 
-export const store = createStore(rootReducer, initialState)
+export default createStore(rootReducer, initialState)

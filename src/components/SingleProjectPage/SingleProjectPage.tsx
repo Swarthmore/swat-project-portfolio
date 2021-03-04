@@ -3,7 +3,7 @@ import * as Faker from "faker";
 import { useParams } from "react-router-dom";
 import { Project } from "../../types/Project";
 import { Typography, Container } from "@material-ui/core";
-import * as Markdown from "react-markdown";
+import Markdown from "react-markdown";
 
 export default function SingleProjectPage() {
 

@@ -11,9 +11,9 @@ import { Container } from "@material-ui/core";
 import LoginCard from "../LoginCard/LoginCard";
 import { useSelector } from "react-redux";
 import { isLoaded, isEmpty } from "react-redux-firebase";
-import { RootState } from "../../reducer";
-import AddProjectPage from "../AddProjectPage/AddProjectPage";
+import { RootState } from "../../store/reducer";
 import ProjectsGrid from "../ProjectsGrid/ProjectsGrid";
+import MyProjectsTable from "../MyProjectsTable/MyProjectsTable";
 
 export default function LandingPage() {
 
@@ -24,7 +24,7 @@ export default function LandingPage() {
             {!isLoaded(auth) 
                 ? <span>Loading...</span>
                     : isEmpty(auth) 
-                        ? <LoginCard /> : <ProjectsGrid />
+                        ? <LoginCard /> : <div><MyProjectsTable /><ProjectsGrid /></div>
             }
         </Container>
     )

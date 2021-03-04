@@ -12,10 +12,10 @@ import useInput from "../../hooks/useInput";
 import { useFirestore } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 import { Project } from "../../types/Project";
-import { RootState } from "../../reducer"
+import { RootState } from "../../store/reducer"
 import { useStyles } from "./useStyles";
 import { DatePicker } from "@material-ui/pickers";
-import * as Markdown from "react-markdown";
+import Markdown from "react-markdown";
 import { useHistory } from "react-router-dom";
 
 export default function ProjectForm() {

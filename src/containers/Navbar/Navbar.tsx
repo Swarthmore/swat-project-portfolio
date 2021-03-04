@@ -6,29 +6,34 @@
  */
 
 import * as React from "react";
-import { AppBar, Button, Toolbar } from "@material-ui/core";
+import { AppBar, Link, Toolbar, Typography } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { isLoaded, isEmpty } from "react-redux-firebase";
-import { RootState } from "../../reducer";
-import LogoutButton from "../LogoutButton/LogoutButton";
-import { useStyles } from "./useStyles";
+import { RootState } from "../../store/reducer";
+import LogoutButton from "../../components/LogoutButton/LogoutButton";
+import styles from "./styles";
 import { appConfig } from "../../config";
 import { useHistory } from "react-router-dom";
 
 export default function Navbar() {
 
     const auth = useSelector((state: RootState) => state.firebase.auth)
-    const classes = useStyles();
+    const classes = styles();
     const history = useHistory();
+
+    const onClick = (e: any) => {
+        e.preventDefault();
+        history.push("/");
+    }
 
     return (
         <AppBar position="static">
             <Toolbar>
-                <Button className={classes.title} onClick={() => history.push("/")} color="inherit">{appConfig.name}</Button>
+                <Typography variant="h6" className={classes.title} color="inherit"><Link color="inherit" href="/" onClick={onClick}>{appConfig.name}</Link></Typography>
                 {/* Display the logout button if the user is logged in */}
                 {isLoaded(auth) && !isEmpty(auth) && <LogoutButton />}
             </Toolbar>
         </AppBar>
-    )
+    );
 
 }
