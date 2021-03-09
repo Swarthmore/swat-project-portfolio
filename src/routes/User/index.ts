@@ -1,5 +1,5 @@
 import UserPage from "./components/User";
-import { USER_PATH as path } from "../../constants/paths";
+import { LIST_BY_USER as path } from "../../constants/paths";
 
 export default {
     path,

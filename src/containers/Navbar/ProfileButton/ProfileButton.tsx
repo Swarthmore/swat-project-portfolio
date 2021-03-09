@@ -15,7 +15,7 @@ export default function ProfileButton() {
     }
     return (
         <Tooltip title="View Profile">
-            <IconButton color="inherit" aria-label="View Profile" component="span" onClick={() => history.push(`/users/${auth.uid}`)}>
+            <IconButton color="inherit" aria-label="View Profile" component="span" onClick={() => history.push("/manage")}>
                 <ProfileIcon />
             </IconButton>
         </Tooltip>      

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Card, CardContent, CardProps, Typography } from "@material-ui/core";
+import { Button, Card, CardContent, CardProps, CardActions, Typography } from "@material-ui/core";
 import { Project } from "../../types";
 import { useHistory } from "react-router-dom";
 interface Props extends CardProps {
@@ -15,8 +15,10 @@ export default function ProjectCard({ project, ...rest }: Props) {
             <CardContent>
                 <Typography variant="h5">{project.name}</Typography>
                 <Typography>{project.description}</Typography>
-                <Button onClick={() => history.push(`/projects/${project.id}`)}>Read More</Button>
             </CardContent>
+            <CardActions>
+                <Button onClick={() => history.push(`/projects/${project.id}`)}>Read More</Button>
+            </CardActions>
         </Card>
     );
 
