@@ -11,75 +11,48 @@ export default function SideMenu() {
 
     const classes = styles();
     const history = useHistory();
-    const location = useLocation();
-    const firestore = useFirestore();
 
     const auth = useSelector((state: RootState) => state.firebase.auth);
-
-    if (!isLoaded(auth)) {
+    const teams = useSelector((state: RootState) => state.firestore.data.teams);
+    
+    if (!isLoaded(teams) || !isLoaded(teams)) {
         return <div>Loading...</div>
     }
 
-    const [selected, setSelected] = React.useState<Team|null>(null);
-
-    // TODO: Pull these from firestore instead
-    const teams: Team[] = [
-        { id: "2Ic0FR9LZ6njQ6xO54co", name: "Academic Technology" },
-        { id: "6nwyDhn3F8chk9uPxfiv", name: "Web Team" },
-        { id: "rmiNR7hL6VSVjJSJe61l", name: "AIS" },
-        { id: "yigGHL5Xcdu0N8gcCGI0", name: "Networking" },
-        { id: "xJd3FTSNpudQ0eX5d8No", name: "Help Desk" }
-    ];
+    if (isEmpty(teams)) {
+        return <div>No teams found</div>
+    }
 
     // handle what happens when the user clicks on a team 
-    const onSelect = (team: Team) => {
+    const onSelect = (id: string) => {
         // go the project listing page for the specified team
-        setSelected(team);
-        history.push(`/projects/by-team/${team.id}`);
+        history.push(`/projects/by-team/${id}`);
     }
 
     const onShowAllClick = () => {
-        setSelected({ id: "Show All", name: "Show All" });
         history.push("/projects/by-team/all");
     }
 
     const onAddClick = () => {
-        setSelected({ id: "Add", name: "Add" });
         history.push("/projects/add");
     }
 
-    React.useEffect(() => {
-        if (!location.pathname.startsWith("/projects/by-team/")) {
-
-            if (location.pathname.startsWith("/projects/add")) {
-                setSelected({ id: "Add", name: "Add" });
-            } else {
-                setSelected(null);
-            }
-
-        }
-
-        if (location.pathname.startsWith("/projects/by-team/all")) {
-            setSelected({ id: "Show All", name: "Show All" });
-        }
-
-    }, [location.pathname])
-
     return (
         <MenuList className={classes.root}>
-            {teams.map(team => (
-                    <MenuItem key={team.id} onClick={() => onSelect(team)}>
-                        {selected ? selected.name === team.name ? <strong>{team.name}</strong> : team.name : team.name}
-                    </MenuItem>
-                )
-            )}
+
+            {Object.keys(teams).map((key: string) => (
+                <MenuItem key={teams[key].id} onClick={() => onSelect(key)}>
+                    {teams[key].name}
+                </MenuItem>
+            ))}
+
             <Divider />
             <MenuItem onClick={onShowAllClick}>
-                {selected ? selected.name === "Show All" ? <strong>Show All</strong> : "Show All" : "Show All"}
+                {"Show All"}
             </MenuItem>
             <Divider />
             {!isEmpty(auth) && <MenuItem onClick={onAddClick}>
-                {selected ? selected.name === "Add" ? <strong>Add Project</strong> : "Add Project" : "Add Project"}
+                {"Add Project"}
             </MenuItem>}
         </MenuList>
     );
