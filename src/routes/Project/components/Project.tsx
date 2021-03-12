@@ -7,6 +7,7 @@ import { useFirestoreConnect, populate, isLoaded, isEmpty, useFirestore } from "
 import ReactMarkdown from "react-markdown";
 import PostUpdate from "../../../containers/StatusUpdate/StatusUpdate";
 import firebase from "firebase";
+import { dateString } from "../../../utils";
 
 export default function ProjectPage() {
 
@@ -60,15 +61,28 @@ export default function ProjectPage() {
     return (
         <div className={classes.root}>
             {isOwner && <PostUpdate onSubmit={onSubmit} />}
-            <Card>
+
+            <Card className={classes.card}>
                 <CardContent>
                     <Typography variant="h2">{project.name}</Typography>
-                    <Typography variant="subtitle1">Started on {project.meta.createdOn}</Typography>
+                    <Typography variant="subtitle1">Started on {dateString(project.meta.createdOn)}</Typography>
                     <Typography variant="subtitle2">{project.description}</Typography>
                     {project.markdown && <ReactMarkdown>{project.markdown}</ReactMarkdown>}
-                    {project.updates.map((update: any) => <div key={update.value}>{update.value}</div>)}
                 </CardContent>
             </Card>
+
+
+            {project.updates.length > 0 && <Typography variant="h3">Updates</Typography>}
+            {project.updates.map((update: any, i: number) => (
+                <Card key={i} className={classes.update}>
+                    <CardContent>
+                        <Typography variant="subtitle1">{dateString(update.createdOn)}</Typography>
+                        <Typography>{update.value}</Typography>
+                    </CardContent>
+                </Card>
+            ))}
+
+
         </div>
     );
 

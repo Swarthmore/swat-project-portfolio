@@ -77,7 +77,8 @@ export default function AddProjectPage() {
                 ownedBy: uid,
                 createdBy: uid,
                 createdOn: Date.now().toString() 
-            }
+            },
+            updates: []
         }
 
         try {

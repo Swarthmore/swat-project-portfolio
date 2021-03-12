@@ -1,11 +1,13 @@
 import React from "react";
-import { TextField, Button, Typography } from "@material-ui/core";
+import { TextField, Button, Typography, Card, CardContent, CardActions } from "@material-ui/core";
 import { useFirestore, useFirestoreConnect, populate, isLoaded, isEmpty } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 import styles from "./styles";
 import { DatePicker } from "@material-ui/pickers";
 import { useHistory, useParams } from "react-router-dom";
 import useInput from "../../../hooks/useInput";
+import { RootState } from "../../../store/reducer";
+import { dateString } from "../../../utils";
 
 export default function EditProjectPage() {
 
@@ -27,7 +29,7 @@ export default function EditProjectPage() {
         { collection, populates, doc }
     ]);
 
-    const projects = useSelector((state: any) => populate(state.firestore, "projects", populates));
+    const projects = useSelector((state: RootState) => populate(state.firestore, "projects", populates));
 
     // Show message while project is loading
     if (!isLoaded(projects)) {
@@ -98,6 +100,22 @@ export default function EditProjectPage() {
 
     }
 
+    const deleteUpdate = async (update: any) => {
+        try {
+            const updatedData = {
+                updates: firestore.FieldValue.arrayRemove(update)
+            }
+            const confirmed = confirm("WARNING: This action is permanent. Proceed?");
+            if (!confirmed) return;
+            await firestore.update({ collection: "projects", doc: params.id }, updatedData);
+            // TODO: this is hacky and should be fixed
+            history.push(`/projects/${params.id}`);
+        
+        } catch(error) {
+            console.error(error);
+        }
+    }
+
     return (
         <div className={classes.root}>
             <Typography variant="h3">Edit Project</Typography>
@@ -108,6 +126,20 @@ export default function EditProjectPage() {
                 <TextField className={classes.field} label="Tell us about your project. You can use Markdown, but keep it under 400 characters" rows="10" rowsMax="10" variant="filled" multiline fullWidth {...bindMarkdown} />
                 <Button className={classes.button} type="submit">Submit</Button>
             </form>
+
+            {<Typography variant="h4">Updates</Typography>}
+            {projects[params.id].updates.length === 0 && <Typography>You haven't posted any updates to this project yet</Typography>}
+            {projects[params.id].updates.map((update: any, i: number) => (
+                <Card key={i}>
+                    <CardContent>
+                        <Typography variant="subtitle1">{dateString(update.createdOn)}</Typography>
+                        <Typography>{update.value}</Typography>
+                    </CardContent>
+                    <CardActions>
+                        <Button onClick={() => deleteUpdate(update)}>Delete</Button>
+                    </CardActions>
+                </Card>
+            ))}
         </div>
     )
 

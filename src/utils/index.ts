@@ -9,6 +9,6 @@ export function createMeta(createdBy: string)
 
 export function dateString(timestamp: string)
 {
-    const date = new Date(timestamp);
+    const date = new Date(+timestamp);
     return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
 }
