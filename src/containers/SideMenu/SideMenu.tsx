@@ -1,14 +1,24 @@
-import * as React from "react";
+import React from "react";
 import { Team } from "../../types";
 import { MenuList, MenuItem, Divider } from "@material-ui/core";
 import styles from "./styles";
 import { useHistory, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { isEmpty, isLoaded, useFirestore } from "react-redux-firebase";
+import { RootState } from "../../store/reducer";
 
 export default function SideMenu() {
 
     const classes = styles();
     const history = useHistory();
     const location = useLocation();
+    const firestore = useFirestore();
+
+    const auth = useSelector((state: RootState) => state.firebase.auth);
+
+    if (!isLoaded(auth)) {
+        return <div>Loading...</div>
+    }
 
     const [selected, setSelected] = React.useState<Team|null>(null);
 
@@ -48,6 +58,11 @@ export default function SideMenu() {
             }
 
         }
+
+        if (location.pathname.startsWith("/projects/by-team/all")) {
+            setSelected({ id: "Show All", name: "Show All" });
+        }
+
     }, [location.pathname])
 
     return (
@@ -63,9 +78,9 @@ export default function SideMenu() {
                 {selected ? selected.name === "Show All" ? <strong>Show All</strong> : "Show All" : "Show All"}
             </MenuItem>
             <Divider />
-            <MenuItem onClick={onAddClick}>
+            {!isEmpty(auth) && <MenuItem onClick={onAddClick}>
                 {selected ? selected.name === "Add" ? <strong>Add Project</strong> : "Add Project" : "Add Project"}
-            </MenuItem>
+            </MenuItem>}
         </MenuList>
     );
 

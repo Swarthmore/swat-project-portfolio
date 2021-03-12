@@ -29,7 +29,7 @@ export interface Project {
     deadline?: string;
 
     // an array of status updates for the project
-    statusUpdates?: ProjectStatusUpdate[];
+    updates?: ProjectStatusUpdate[];
 
     // a color hex or rgb string that can be used as an accent color for the project
     color?: string;
@@ -53,13 +53,13 @@ export interface Project {
 export interface ProjectStatusUpdate {
 
     // the id of the user who posted the update
-    postedBy: string;
+    createdBy: string;
 
     // the date string of when the update was made
-    postedOn: string;
+    createdOn: string;
 
     // the update message
-    message: string;
+    value: string;
 
 }
 

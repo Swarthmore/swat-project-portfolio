@@ -5,6 +5,7 @@ import { RootState } from "../../../store/reducer";
 import { useHistory } from "react-router-dom";
 import { Paper, Table, TableBody, TableHead, TableCell, TableContainer, TableRow, Button } from "@material-ui/core";
 import { Project } from "../../../types";
+import { dateString } from "../../../utils";
 
 export default function ManagePage() {
 
@@ -35,9 +36,14 @@ export default function ManagePage() {
         history.push(`/projects/edit/${project.id}`);
     }
     const onDeleteClick = async (e: React.MouseEvent<HTMLButtonElement>, project: Project) => {
-        e.preventDefault();
-        // TODO: Add a confirmation before deleting
-        await firestore.collection("projects").doc(project.id).delete();
+        try {
+            e.preventDefault();
+            const confirmation = confirm("WARNING: This action is permanent. Click OK to proceed.");
+            if (!confirmation) return;
+            await firestore.collection("projects").doc(project.id).delete();
+        } catch(error) {
+            console.error(error);
+        }
     }
 
     return (
@@ -58,7 +64,7 @@ export default function ManagePage() {
                             <TableCell>{project.name}</TableCell>
                             <TableCell>{project.description.length > 100 ? project.description.substr(0, 100) + "..." : project.description}</TableCell>
                             <TableCell>{project.deadline && new Date(project.deadline).toLocaleDateString()}</TableCell>
-                            <TableCell>{new Date(project.meta.createdOn).toLocaleDateString()}</TableCell>
+                            <TableCell>{dateString(project.meta.createdOn)}</TableCell>
                             <TableCell>
                                 <Button onClick={e => onEditClick(e, project)}>Edit</Button>
                                 <Button onClick={e => onDeleteClick(e, project)}>Delete</Button>

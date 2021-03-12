@@ -76,8 +76,9 @@ export default function AddProjectPage() {
             meta: {
                 ownedBy: uid,
                 createdBy: uid,
-                createdOn: new Date(Date.now()).toISOString()
-            }
+                createdOn: Date.now().toString() 
+            },
+            updates: []
         }
 
         try {

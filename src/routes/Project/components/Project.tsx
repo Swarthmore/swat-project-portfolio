@@ -1,15 +1,21 @@
 import React from "react";
-import { Typography, Divider } from "@material-ui/core";
+import { Card, CardContent, Typography, Divider } from "@material-ui/core";
 import styles from "./styles";
 import { useParams, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useFirestoreConnect, populate, isLoaded, isEmpty } from "react-redux-firebase";
+import { useFirestoreConnect, populate, isLoaded, isEmpty, useFirestore } from "react-redux-firebase";
 import ReactMarkdown from "react-markdown";
+import PostUpdate from "../../../containers/StatusUpdate/StatusUpdate";
+import firebase from "firebase";
+import { dateString } from "../../../utils";
 
 export default function ProjectPage() {
 
     const classes = styles();
     const history = useHistory();
+
+    const firestore = useFirestore();
+    const auth = useSelector((state: any) => state.firebase.auth);
 
     const params: { projectId: string } = useParams();
 
@@ -41,17 +47,42 @@ export default function ProjectPage() {
     // convert the project to an array
     [project] = Object.keys(project).map((key: string) => ({ id: key, ...project[key] }));
 
+    const isOwner = project.meta.ownedBy === auth?.uid;
+
+    const onSubmit = async (value: string) => {
+        const update = {
+            value: value,
+            createdOn: Date.now().toString(),
+            createdBy: auth.uid
+        }
+        await firestore.update(`projects/${project.id}`, { updates:  firebase.firestore.FieldValue.arrayUnion(update) });
+    }
+    
     return (
         <div className={classes.root}>
-            <Typography variant="h2">{project.name}</Typography>
-            <Typography variant="subtitle1">Started on {project.meta.createdOn}</Typography>
-            <Typography variant="subtitle2">{project.description}</Typography>
-            {project.markdown && (
-                <>
-                    <Divider className={classes.divider} />
-                    <ReactMarkdown>{project.markdown}</ReactMarkdown>
-                </>
-            )}
+            {isOwner && <PostUpdate onSubmit={onSubmit} />}
+
+            <Card className={classes.card}>
+                <CardContent>
+                    <Typography variant="h2">{project.name}</Typography>
+                    <Typography variant="subtitle1">Started on {dateString(project.meta.createdOn)}</Typography>
+                    <Typography variant="subtitle2">{project.description}</Typography>
+                    {project.markdown && <ReactMarkdown>{project.markdown}</ReactMarkdown>}
+                </CardContent>
+            </Card>
+
+
+            {project.updates.length > 0 && <Typography variant="h3">Updates</Typography>}
+            {project.updates.map((update: any, i: number) => (
+                <Card key={i} className={classes.update}>
+                    <CardContent>
+                        <Typography variant="subtitle1">{dateString(update.createdOn)}</Typography>
+                        <Typography>{update.value}</Typography>
+                    </CardContent>
+                </Card>
+            ))}
+
+
         </div>
     );
 
