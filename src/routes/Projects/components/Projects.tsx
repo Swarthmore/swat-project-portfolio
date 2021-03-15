@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 import ProjectCard from "../../../containers/ProjectCard/ProjectCard";
 import { Project } from "../../../types/index";
+import { PageTitle } from "../../../containers/PageTitle";
 
 export default function Projects() {
 
@@ -55,7 +56,8 @@ export default function Projects() {
 
     return (
         <div className={classes.root}>
-            <Typography variant="h3">{team ? team.name : "All"} Projects</Typography>
+
+            <PageTitle title={team ? team.name : "All"} />
             {Array.isArray(projects) && projects.map((project: Project) => (
                 <div className={classes.row} key={project.id}>
                     <ProjectCard project={project} />

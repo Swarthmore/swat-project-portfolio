@@ -8,6 +8,7 @@ import styles from "./styles";
 import { DatePicker } from "@material-ui/pickers";
 import { useHistory } from "react-router-dom";
 import useInput from "../../../hooks/useInput";
+import { FormSubmitButton } from "../../../containers/FormSubmitButton/FormSubmitButton";
 
 export default function AddProjectPage() {
 
@@ -98,9 +99,17 @@ export default function AddProjectPage() {
             <form className={classes.form} onSubmit={onSubmit}>
                 <TextField className={classes.field} label="Enter a name for your project" variant="filled" required {...bindName} />
                 <TextField className={classes.field} label="Give your project a short description" variant="filled" required {...bindDescription} />
-                <DatePicker className={classes.field} format="MM/DD/yyyy" disablePast={true} {...bindDeadline} />
-                <TextField className={classes.field} label="Tell us about your project. You can use Markdown, but keep it under 400 characters" rows="10" rowsMax="10" variant="filled" multiline fullWidth {...bindMarkdown} />
-                <Button className={classes.button} type="submit">Submit</Button>
+
+                <DatePicker label="Project Deadline" className={classes.field} format="MM/DD/yyyy" disablePast={true} {...bindDeadline} />
+                
+                <div className={classes.field}>
+                    <label>
+                        Tell us about your project. You can use Markdown, but keep it under 400 characters
+                    </label>
+                    <TextField className={classes.field} fullWidth label="Markdown description" rows={10} rowsMax={10} variant="filled" multiline {...bindMarkdown} />
+                </div>
+
+                <FormSubmitButton label="Submit" />
             </form>
         </div>
     )
