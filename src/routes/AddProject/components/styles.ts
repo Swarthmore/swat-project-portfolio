@@ -17,7 +17,8 @@ export default makeStyles(theme => ({
         marginTop: theme.spacing(1)
     },
     button: {
-        marginTop: theme.spacing(1)
+        marginTop: theme.spacing(2),
+        maxWidth: 200
     },
     preview: {
         border: "1px dashed #ccc",

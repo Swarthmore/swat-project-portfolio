@@ -8,6 +8,7 @@ import { useHistory, useParams } from "react-router-dom";
 import useInput from "../../../hooks/useInput";
 import { RootState } from "../../../store/reducer";
 import { dateString } from "../../../utils";
+import { FormSubmitButton } from "../../../containers/FormSubmitButton/FormSubmitButton";
 
 export default function EditProjectPage() {
 
@@ -118,28 +119,31 @@ export default function EditProjectPage() {
 
     return (
         <div className={classes.root}>
-            <Typography variant="h3">Edit Project</Typography>
+            <Typography variant="h3" gutterBottom>Edit Project</Typography>
             <form className={classes.form} onSubmit={onSubmit}>
                 <TextField className={classes.field} label="Enter a name for your project" variant="filled" required {...bindName} />
                 <TextField className={classes.field} label="Give your project a short description" variant="filled" required {...bindDescription} />
                 <DatePicker className={classes.field} format="MM/DD/yyyy" {...bindDeadline} />
-                <TextField className={classes.field} label="Tell us about your project. You can use Markdown, but keep it under 400 characters" rows="10" rowsMax="10" variant="filled" multiline fullWidth {...bindMarkdown} />
-                <Button className={classes.button} type="submit">Submit</Button>
+                <TextField className={classes.field} label="Project Markdown" rows="10" rowsMax="10" variant="filled" multiline fullWidth {...bindMarkdown} />
+                <FormSubmitButton label="Save" />
             </form>
 
-            {<Typography variant="h4">Updates</Typography>}
-            {projects[params.id].updates.length === 0 && <Typography>You haven't posted any updates to this project yet</Typography>}
-            {projects[params.id].updates.map((update: any, i: number) => (
-                <Card key={i}>
-                    <CardContent>
-                        <Typography variant="subtitle1">{dateString(update.createdOn)}</Typography>
-                        <Typography>{update.value}</Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Button onClick={() => deleteUpdate(update)}>Delete</Button>
-                    </CardActions>
-                </Card>
-            ))}
+
+            <div className={classes.updates}>
+                {<Typography variant="h5" gutterBottom>Updates</Typography>}
+                {projects[params.id].updates.length === 0 && <Typography>You haven't posted any updates to this project yet</Typography>}
+                {projects[params.id].updates.map((update: any, i: number) => (
+                    <Card key={i}>
+                        <CardContent>
+                            <Typography variant="subtitle1">{dateString(update.createdOn)}</Typography>
+                            <Typography>{update.value}</Typography>
+                        </CardContent>
+                        <CardActions>
+                            <Button onClick={() => deleteUpdate(update)}>Delete</Button>
+                        </CardActions>
+                    </Card>
+                ))}
+            </div>
         </div>
     )
 

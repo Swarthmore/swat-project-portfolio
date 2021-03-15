@@ -34,6 +34,8 @@ export interface Project {
     // a color hex or rgb string that can be used as an accent color for the project
     color?: string;
 
+    updates: any[];
+    
     // meta data about the project
     meta: {
 

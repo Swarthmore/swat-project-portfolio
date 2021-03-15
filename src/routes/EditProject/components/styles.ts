@@ -24,5 +24,8 @@ export default makeStyles(theme => ({
         boxSizing: "border-box",
         padding: theme.spacing(1),
         marginTop: theme.spacing(1)
+    },
+    updates: {
+        marginTop: theme.spacing(2)
     }
 }));
