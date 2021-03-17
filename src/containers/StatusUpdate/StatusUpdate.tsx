@@ -15,9 +15,7 @@ export default function StatusUpdate({ onSubmit }: { onSubmit: (val: string) => 
         )
     }
 
-
     const onClick = (val:string) => {
-
         try {
             onSubmit(val);
             // clear the form
