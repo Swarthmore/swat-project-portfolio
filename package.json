@@ -9,6 +9,7 @@
     "deploy": "gh-pages -d ./build",
     "predeploy": "npm run build"
   },
+  "homepage": "https://swarthmore.github.io/swat-project-portfolio/",
   "keywords": [],
   "author": "",
   "license": "ISC",
