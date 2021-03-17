@@ -12,7 +12,7 @@ import { createFirestoreInstance } from "redux-firestore";
 import { Provider } from "react-redux";
 import { ReactReduxFirebaseProvider } from "react-redux-firebase";
 import { CssBaseline, ThemeProvider } from "@material-ui/core";
-import { BrowserRouter } from "react-router-dom";
+import {BrowserRouter, HashRouter} from "react-router-dom";
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import styles from "./styles";
@@ -36,10 +36,10 @@ export default function App({ store, routes }: Props) {
             <ReactReduxFirebaseProvider {...rrfProps}>
                 <ThemeProvider theme={MuiTheme}>
                     <MuiPickersUtilsProvider utils={MomentUtils}>
-                        <BrowserRouter>
+                        <HashRouter>
                             <CssBaseline/>
                             {routes}
-                        </BrowserRouter>
+                        </HashRouter>
                     </MuiPickersUtilsProvider> 
                 </ThemeProvider>
             </ReactReduxFirebaseProvider>
