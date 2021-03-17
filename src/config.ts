@@ -25,5 +25,5 @@ export const rrfConfig = {
 
 // app config
 export const appConfig = {
-    name: "Goose Emporium"
+    name: "Projects @ Swarthmore"
 }

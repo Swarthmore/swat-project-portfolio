@@ -8,6 +8,7 @@ import ReactMarkdown from "react-markdown";
 import PostUpdate from "../../../containers/StatusUpdate/StatusUpdate";
 import firebase from "firebase";
 import { dateString } from "../../../utils";
+import {Project} from "../../../types";
 
 export default function ProjectPage() {
 
@@ -32,20 +33,22 @@ export default function ProjectPage() {
         { collection, populates, doc }
     ])
 
-    let project = useSelector((state: any) => populate(state.firestore, "projects", populates));
+    const projects = useSelector((state: any) => populate(state.firestore, "projects", populates));
 
     // Show message while project is loading
-    if (!isLoaded(project)) {
+    if (!isLoaded(projects)) {
         return <div>Loading...</div>
     }
 
     // Show message if there is no project 
-    if (isEmpty(project)) {
+    if (isEmpty(projects)) {
         return <div>Project is empty</div>
     }
 
-    // convert the project to an array
-    [project] = Object.keys(project).map((key: string) => ({ id: key, ...project[key] }));
+    const project: Project = {
+        id: params.projectId,
+        ...projects[params.projectId]
+    }
 
     const isOwner = project.meta.ownedBy === auth?.uid;
 
@@ -72,8 +75,8 @@ export default function ProjectPage() {
             </Card>
 
 
-            {project.updates.length > 0 && <Typography variant="h3">Updates</Typography>}
-            {project.updates.map((update: any, i: number) => (
+            {project.updates && project.updates.length > 0 && <Typography variant="h4">Updates</Typography>}
+            {project.updates && project.updates.map((update: any, i: number) => (
                 <Card key={i} className={classes.update}>
                     <CardContent>
                         <Typography variant="subtitle1">{dateString(update.createdOn)}</Typography>

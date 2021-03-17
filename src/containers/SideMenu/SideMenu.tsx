@@ -40,8 +40,8 @@ export default function SideMenu() {
     return (
         <MenuList className={classes.root}>
 
-            {Object.keys(teams).map((key: string) => (
-                <MenuItem key={teams[key].id} onClick={() => onSelect(key)}>
+            {Object.keys(teams).map((key: string, i: number) => (
+                <MenuItem key={i} onClick={() => onSelect(key)}>
                     {teams[key].name}
                 </MenuItem>
             ))}
