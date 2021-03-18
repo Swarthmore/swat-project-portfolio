@@ -3,18 +3,30 @@ import { useSelector } from "react-redux";
 import { useFirestoreConnect, isLoaded, isEmpty, useFirestore } from "react-redux-firebase";
 import { RootState } from "../../../store/reducer";
 import { useHistory } from "react-router-dom";
-import { Paper, Table, TableBody, TableHead, TableCell, TableContainer, TableRow, Button } from "@material-ui/core";
+import {
+    Paper,
+    Table,
+    TableBody,
+    TableHead,
+    TableCell,
+    TableContainer,
+    TableRow,
+    Button,
+    IconButton
+} from "@material-ui/core";
 import { Project } from "../../../types";
 import { dateString } from "../../../utils";
 import useUid from "../../../hooks/useUid";
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
+import styles from "./styles";
 
 export default function ManagePage() {
 
     const history = useHistory();
-
     const firestore = useFirestore();
-
     const { uid } = useUid();
+    const classes = styles();
 
     // at this point we have the user id
     useFirestoreConnect([
@@ -48,7 +60,7 @@ export default function ManagePage() {
     }
 
     return (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} className={classes.root}>
             <Table>
                 <TableHead>
                     <TableRow>
@@ -63,12 +75,16 @@ export default function ManagePage() {
                     {projects.map((project: Project) => (
                         <TableRow key={project.id || project.name}>
                             <TableCell>{project.name}</TableCell>
-                            <TableCell>{project.description.length > 100 ? project.description.substr(0, 100) + "..." : project.description}</TableCell>
+                            <TableCell className={classes.descriptionCell}>{project.description.length > 100 ? project.description.substr(0, 100) + "..." : project.description}</TableCell>
                             <TableCell>{project.deadline && new Date(project.deadline).toLocaleDateString()}</TableCell>
                             <TableCell>{dateString(project.meta.createdOn)}</TableCell>
                             <TableCell>
-                                <Button onClick={e => onEditClick(e, project)}>Edit</Button>
-                                <Button onClick={e => onDeleteClick(e, project)}>Delete</Button>
+                                <IconButton onClick={e => onEditClick(e, project)}>
+                                    <EditIcon />
+                                </IconButton>
+                                <IconButton onClick={e => onDeleteClick(e, project)}>
+                                    <DeleteIcon />
+                                </IconButton>
                             </TableCell>
                         </TableRow>
                     ))}
