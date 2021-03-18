@@ -1,7 +1,7 @@
 import React from "react";
 import { MenuList, MenuItem, Divider } from "@material-ui/core";
 import styles from "./styles";
-import { useHistory } from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 import useTeams from "../../hooks/useTeams";
 import useUid from "../../hooks/useUid";
 import {Team} from "../../types";
@@ -11,6 +11,7 @@ export default function SideMenu() {
 
     const classes = styles();
     const history = useHistory();
+    const { pathname } = useLocation();
 
     const { uid } = useUid();
     const { teams, loaded } = useTeams();
@@ -27,18 +28,22 @@ export default function SideMenu() {
         history.push(ADD_PROJECT_ROUTE);
     }
 
+    const lastPathPart = pathname.split("/").pop();
+
     return !loaded
         ? <>Loading</>
         : (
             <MenuList className={classes.root}>
-                {teams.map((team: Team) => <MenuItem key={team.id} onClick={() => onSelect(team.id)}>{team.name}</MenuItem>)}
+                {teams.map((team: Team) => <MenuItem key={team.id} onClick={() => onSelect(team.id)}>
+                    {lastPathPart === team.id ? <strong>{team.name}</strong> : team.name}
+                </MenuItem>)}
                 <Divider />
                 <MenuItem onClick={onShowAllClick}>
-                    {"Show All"}
+                    {lastPathPart === "all" ? <strong>All Projects</strong> : "All Projects"}
                 </MenuItem>
                 <Divider />
                 {uid && <MenuItem onClick={onAddClick}>
-                    {"Add Project"}
+                    {lastPathPart === "add" ? <strong>Add Project</strong> : "Add Project"}
                 </MenuItem>}
             </MenuList>
         );
