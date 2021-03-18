@@ -8,12 +8,7 @@ export default function Home() {
     const classes = styles();
     const history = useHistory();
 
-    history.push("projects/by-team/all");
-
-    return (
-        <div className={classes.root}>
-            <p>Home page</p>
-        </div>
-    );
+    React.useEffect(() => history.push("projects/by-team/all"), []);
+    return <></>
 
 }

@@ -1,5 +1,3 @@
-// This file is the entry point to the application
-
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import store from "./store/store";

@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import styles from "./styles";
 import { createMeta, dateString } from "../../utils";
+import {SINGLE_PATH} from "../../constants/paths";
 
 export default function ProjectCard({ project, ...rest }: any) {
 
@@ -13,8 +14,6 @@ export default function ProjectCard({ project, ...rest }: any) {
     const classes = styles();
 
     const handleExpandClick = () => setExpanded(!expanded);
-
-    // Get the last status update. If the project has no status updates, use the createdOn date.
 
     return (
         <Card {...rest}>
@@ -29,7 +28,7 @@ export default function ProjectCard({ project, ...rest }: any) {
                 <Typography>{project.description}</Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <Button onClick={() => history.push(`/projects/${project.id}`)}>Read More</Button>
+                <Button onClick={() => history.push(SINGLE_PATH.replace(":id", project.id))}>Read More</Button>
                 <IconButton onClick={handleExpandClick}>
                     <ExpandMoreIcon className={expanded ? classes.expand : classes.expandOpen} />
                 </IconButton>

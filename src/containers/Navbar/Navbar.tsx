@@ -22,15 +22,10 @@ export default function Navbar() {
     const classes = styles();
     const history = useHistory();
 
-    const onClick = (e: any) => {
-        e.preventDefault();
-        history.push("/");
-    }
-
     return (
         <AppBar position="static">
             <Toolbar>
-                <Typography variant="h6" className={classes.title} color="inherit"><Link color="inherit" href="/" onClick={onClick}>{appConfig.name}</Link></Typography>
+                <Typography variant="h6" className={classes.title} color="inherit"><Link color="inherit" href="/">{appConfig.name}</Link></Typography>
                 {/* Display the logout button if the user is logged in */}
                 {isLoaded(auth) && !isEmpty(auth) && <ProfileButton />}
                 {isLoaded(auth) && !isEmpty(auth) && <LogoutButton />}

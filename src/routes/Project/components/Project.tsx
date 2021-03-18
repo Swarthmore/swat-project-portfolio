@@ -9,6 +9,7 @@ import PostUpdate from "../../../containers/StatusUpdate/StatusUpdate";
 import firebase from "firebase";
 import { dateString } from "../../../utils";
 import {Project} from "../../../types";
+import {RootState} from "../../../store/reducer";
 
 export default function ProjectPage() {
 
@@ -18,22 +19,22 @@ export default function ProjectPage() {
     const firestore = useFirestore();
     const auth = useSelector((state: any) => state.firebase.auth);
 
-    const params: { projectId: string } = useParams();
+    const params: { id: string } = useParams();
 
     // if there is no project id provided, redirect the user to the home page
-    if (!params.projectId) {
+    if (!params.id) {
         history.push("/");
     }
 
     const populates = [{ child: "meta.createdBy", root: "users" }];
     const collection = "projects";
-    const doc = params.projectId;
+    const doc = params.id;
 
     useFirestoreConnect([ 
         { collection, populates, doc }
     ])
 
-    const projects = useSelector((state: any) => populate(state.firestore, "projects", populates));
+    const projects = useSelector((state: RootState) => populate(state.firestore, "projects", populates));
 
     // Show message while project is loading
     if (!isLoaded(projects)) {
@@ -46,8 +47,8 @@ export default function ProjectPage() {
     }
 
     const project: Project = {
-        id: params.projectId,
-        ...projects[params.projectId]
+        id: params.id,
+        ...projects[params.id]
     }
 
     const isOwner = project.meta.ownedBy === auth?.uid;

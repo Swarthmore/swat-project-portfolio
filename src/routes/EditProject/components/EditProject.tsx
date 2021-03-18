@@ -9,6 +9,7 @@ import useInput from "../../../hooks/useInput";
 import { RootState } from "../../../store/reducer";
 import { dateString } from "../../../utils";
 import { FormSubmitButton } from "../../../containers/FormSubmitButton/FormSubmitButton";
+import {HOME_PATH, SINGLE_PATH} from "../../../constants/paths";
 
 export default function EditProjectPage() {
 
@@ -93,7 +94,7 @@ export default function EditProjectPage() {
         try {
             await firestore.update(`projects/${params.id}`, updatedProject)
             resetForm();
-            history.push(`/projects/${params.id}`);
+            history.push(SINGLE_PATH.replace(":id", params.id));
 
         } catch (error) {
             console.error(error);
@@ -110,7 +111,7 @@ export default function EditProjectPage() {
             if (!confirmed) return;
             await firestore.update({ collection: "projects", doc: params.id }, updatedData);
             // TODO: this is hacky and should be fixed
-            history.push(`/projects/${params.id}`);
+            history.push(HOME_PATH);
         
         } catch(error) {
             console.error(error);

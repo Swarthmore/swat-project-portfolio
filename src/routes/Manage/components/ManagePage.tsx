@@ -18,7 +18,7 @@ export default function ManagePage() {
 
     // at this point we have the user id
     useFirestoreConnect([
-        { collection: "projects", where: ["meta.createdBy", "==", auth.uid || 0] }
+        { collection: "projects", where: ["meta.createdBy", "==", auth.uid] }
     ]);
 
     const projects = useSelector((state: RootState) => state.firestore.ordered.projects);
@@ -35,6 +35,7 @@ export default function ManagePage() {
         e.preventDefault();
         history.push(`/projects/edit/${project.id}`);
     }
+
     const onDeleteClick = async (e: React.MouseEvent<HTMLButtonElement>, project: Project) => {
         try {
             e.preventDefault();

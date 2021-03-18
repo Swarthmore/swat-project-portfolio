@@ -3,19 +3,18 @@ import styles from "./styles";
 import Props from "./props";
 import Navbar from "../../containers/Navbar";
 import LoginCard from "../../containers/LoginCard";
-import { useSelector } from "react-redux";
-import { isEmpty } from "react-redux-firebase";
 import SideMenu from "../../containers/SideMenu";
+import useUid from "../../hooks/useUid";
 
 export default function CoreLayout({ children }: Props) {
 
     const classes = styles();
 
-    const auth = useSelector((state: any) => state.firebase.auth)
+    const { uid } = useUid();
 
     return (
         <div className={classes.root}>
-            {isEmpty(auth) && <LoginCard />}
+            {!uid && <LoginCard />}
             <Navbar />
             <div className={classes.content}>
                 <SideMenu />

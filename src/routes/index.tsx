@@ -9,24 +9,29 @@ import ProjectRoute from "./Project";
 import UserRoute from "./User";
 import ManageRoute from "./Manage";
 import EditProjectRoute from "./EditProject";
+import AuthIsLoaded from "../containers/AuthIsLoaded";
 
 export default function createRoutes() {
 
     return (
         <CoreLayout>
             <Switch>
-                <Route exact path={HomeRoute.path} component={() => <HomeRoute.component />} />
-                {[
-                    AddProjectRoute,
-                    EditProjectRoute,
-                    ProjectsRoute,
-                    ProjectRoute,
-                    UserRoute,
-                    ManageRoute,
-                ].map((settings: any, i) => (
-                    <Route key={`Route-${i}`} {...settings} />
-                ))}
-                <Route component={NotFoundRoute.component} />
+                <AuthIsLoaded>
+                    <React.Fragment>
+                        <Route exact path={HomeRoute.path} component={() => <HomeRoute.component />} />
+                        {[
+                            AddProjectRoute,
+                            EditProjectRoute,
+                            ProjectsRoute,
+                            ProjectRoute,
+                            UserRoute,
+                            ManageRoute,
+                        ].map((settings: any, i) => (
+                            <Route key={`Route-${i}`} {...settings} />
+                        ))}
+                        <Route component={NotFoundRoute.component} />
+                    </React.Fragment>
+                </AuthIsLoaded>
             </Switch>
         </CoreLayout>
     );
