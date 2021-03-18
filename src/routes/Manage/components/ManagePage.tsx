@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import { Paper, Table, TableBody, TableHead, TableCell, TableContainer, TableRow, Button } from "@material-ui/core";
 import { Project } from "../../../types";
 import { dateString } from "../../../utils";
+import useUid from "../../../hooks/useUid";
 
 export default function ManagePage() {
 
@@ -13,15 +14,14 @@ export default function ManagePage() {
 
     const firestore = useFirestore();
 
-    // get the currently logged in user
-    const auth = useSelector((state: RootState) => state.firebase.auth);
+    const { uid } = useUid();
 
     // at this point we have the user id
     useFirestoreConnect([
-        { collection: "projects", where: ["meta.createdBy", "==", auth.uid] }
+        { collection: "projects", where: ["meta.createdBy", "==", uid], storeAs: "ownedProject" }
     ]);
 
-    const projects = useSelector((state: RootState) => state.firestore.ordered.projects);
+    const projects = useSelector((state: RootState) => state.firestore.ordered.ownedProject);
 
     if (!isLoaded(projects)) {
         return <>Loading...</>

@@ -15,24 +15,22 @@ export default function createRoutes() {
 
     return (
         <CoreLayout>
-            <Switch>
-                <AuthIsLoaded>
-                    <React.Fragment>
-                        <Route exact path={HomeRoute.path} component={() => <HomeRoute.component />} />
-                        {[
-                            AddProjectRoute,
-                            EditProjectRoute,
-                            ProjectsRoute,
-                            ProjectRoute,
-                            UserRoute,
-                            ManageRoute,
-                        ].map((settings: any, i) => (
-                            <Route key={`Route-${i}`} {...settings} />
-                        ))}
-                        <Route component={NotFoundRoute.component} />
-                    </React.Fragment>
-                </AuthIsLoaded>
-            </Switch>
+            <AuthIsLoaded>
+                <Switch>
+                    <Route exact path={HomeRoute.path} component={() => <HomeRoute.component />} />
+                    {[
+                        AddProjectRoute,
+                        EditProjectRoute,
+                        ProjectsRoute,
+                        ProjectRoute,
+                        UserRoute,
+                        ManageRoute,
+                    ].map((settings: any, i) => (
+                        <Route key={`Route-${i}`} {...settings} />
+                    ))}
+                    <Route component={NotFoundRoute.component} />
+                </Switch>
+            </AuthIsLoaded>
         </CoreLayout>
     );
 
