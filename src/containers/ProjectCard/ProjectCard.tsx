@@ -17,6 +17,7 @@ export default function ProjectCard({ project, ...rest }: any) {
 
     return (
         <Card {...rest}>
+
             <CardHeader
                 avatar={
                     <Avatar src={project.meta.createdBy.avatarUrl} />
@@ -24,15 +25,19 @@ export default function ProjectCard({ project, ...rest }: any) {
                 title={project.name}
                 subheader={dateString(project.meta.createdOn)}
             />
+
             <CardContent>
+                {project.updates && project.updates.length > 0 && <Typography variant="caption" gutterBottom>Latest update: {dateString(project.updates[0].createdOn)} {project.updates[0].value}</Typography>}
                 <Typography>{project.description}</Typography>
             </CardContent>
+
             <CardActions disableSpacing>
                 <Button onClick={() => history.push(SINGLE_PATH.replace(":id", project.id))}>Read More</Button>
-                <IconButton onClick={handleExpandClick}>
+                <IconButton onClick={handleExpandClick} disabled={project.updates && project.updates.length === 0} style={{ marginLeft: "auto" }}>
                     <ExpandMoreIcon className={expanded ? classes.expand : classes.expandOpen} />
                 </IconButton>
             </CardActions>
+
             {project.updates && project.updates.length > 0 && <Collapse in={expanded} timeout="auto" unmountOnExit>
                 {project.updates.map((update:any) => (
                     <Card key={update.value}>

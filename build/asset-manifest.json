@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/swat-project-portfolio/static/css/main.afd7172b.chunk.css",
-    "main.js": "/swat-project-portfolio/static/js/main.01a5a7ca.chunk.js",
-    "main.js.map": "/swat-project-portfolio/static/js/main.01a5a7ca.chunk.js.map",
+    "main.js": "/swat-project-portfolio/static/js/main.d5973a25.chunk.js",
+    "main.js.map": "/swat-project-portfolio/static/js/main.d5973a25.chunk.js.map",
     "runtime-main.js": "/swat-project-portfolio/static/js/runtime-main.74f26b18.js",
     "runtime-main.js.map": "/swat-project-portfolio/static/js/runtime-main.74f26b18.js.map",
-    "static/js/2.cda57003.chunk.js": "/swat-project-portfolio/static/js/2.cda57003.chunk.js",
-    "static/js/2.cda57003.chunk.js.map": "/swat-project-portfolio/static/js/2.cda57003.chunk.js.map",
+    "static/js/2.e88c146b.chunk.js": "/swat-project-portfolio/static/js/2.e88c146b.chunk.js",
+    "static/js/2.e88c146b.chunk.js.map": "/swat-project-portfolio/static/js/2.e88c146b.chunk.js.map",
     "index.html": "/swat-project-portfolio/index.html",
     "static/css/main.afd7172b.chunk.css.map": "/swat-project-portfolio/static/css/main.afd7172b.chunk.css.map",
-    "static/js/2.cda57003.chunk.js.LICENSE.txt": "/swat-project-portfolio/static/js/2.cda57003.chunk.js.LICENSE.txt"
+    "static/js/2.e88c146b.chunk.js.LICENSE.txt": "/swat-project-portfolio/static/js/2.e88c146b.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.74f26b18.js",
-    "static/js/2.cda57003.chunk.js",
+    "static/js/2.e88c146b.chunk.js",
     "static/css/main.afd7172b.chunk.css",
-    "static/js/main.01a5a7ca.chunk.js"
+    "static/js/main.d5973a25.chunk.js"
   ]
 }
