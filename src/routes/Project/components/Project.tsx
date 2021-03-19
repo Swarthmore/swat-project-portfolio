@@ -10,56 +10,63 @@ import firebase from "firebase";
 import { dateString } from "../../../utils";
 import {Project} from "../../../types";
 import {RootState} from "../../../store/reducer";
+import useUid from "../../../hooks/useUid";
+import useSnax from "../../../hooks/useSnax";
 
 export default function ProjectPage() {
 
     const classes = styles();
     const history = useHistory();
-
     const firestore = useFirestore();
-    const auth = useSelector((state: any) => state.firebase.auth);
-
-    const params: { id: string } = useParams();
+    const {uid} = useUid();
+    const {id}: { id: string } = useParams();
+    const {setSnack} = useSnax();
 
     // if there is no project id provided, redirect the user to the home page
-    if (!params.id) {
+    if (!id) {
         history.push("/");
     }
 
-    const populates = [{ child: "meta.createdBy", root: "users" }];
+    //const populates = [{ child: "meta.createdBy", root: "users" }];
     const collection = "projects";
-    const doc = params.id;
+    const doc = id;
 
     useFirestoreConnect([ 
-        { collection, populates, doc }
+        { collection, doc }
     ])
 
-    const projects = useSelector((state: RootState) => populate(state.firestore, "projects", populates));
+    const project = useSelector((state: RootState) => state.firestore.ordered.projects);
 
     // Show message while project is loading
-    if (!isLoaded(projects)) {
+    if (!isLoaded(project)) {
         return <div>Loading...</div>
     }
 
     // Show message if there is no project 
-    if (isEmpty(projects)) {
+    if (isEmpty(project)) {
         return <div>Project is empty</div>
     }
 
-    const project: Project = {
-        id: params.id,
-        ...projects[params.id]
+    const first = project[0];
+
+    if (!first) {
+        setSnack({ msg: "Project not found!", type: "error", open: true });
     }
 
-    const isOwner = project.meta.ownedBy === auth?.uid;
+    const isOwner = first.meta.ownedBy === uid;
 
     const onSubmit = async (value: string) => {
-        const update = {
-            value: value,
-            createdOn: Date.now().toString(),
-            createdBy: auth.uid
+        try {
+            const update = {
+                value: value,
+                createdOn: Date.now().toString(),
+                createdBy: uid
+            }
+            await firestore.update(`projects/${first.id}`, { updates:  firebase.firestore.FieldValue.arrayUnion(update) });
+            setSnack({ msg: "Status update posted", type: "success", open: true });
+        } catch(error) {
+            setSnack({ msg: error.toString(), type: "error", open: true });
         }
-        await firestore.update(`projects/${project.id}`, { updates:  firebase.firestore.FieldValue.arrayUnion(update) });
     }
     
     return (
@@ -68,16 +75,16 @@ export default function ProjectPage() {
 
             <Card className={classes.card}>
                 <CardContent>
-                    <Typography variant="h2">{project.name}</Typography>
-                    <Typography variant="subtitle1">Started on {dateString(project.meta.createdOn)}</Typography>
-                    <Typography variant="subtitle2">{project.description}</Typography>
-                    {project.markdown && <ReactMarkdown>{project.markdown}</ReactMarkdown>}
+                    <Typography variant="h2">{first.name}</Typography>
+                    <Typography variant="subtitle1">Started on {dateString(first.meta.createdOn)}</Typography>
+                    <Typography variant="subtitle2">{first.description}</Typography>
+                    {first.markdown && <ReactMarkdown>{first.markdown}</ReactMarkdown>}
                 </CardContent>
             </Card>
 
 
-            {project.updates && project.updates.length > 0 && <Typography variant="h4">Updates</Typography>}
-            {project.updates && project.updates.map((update: any, i: number) => (
+            {first.updates && first.updates.length > 0 && <Typography variant="h4">Updates</Typography>}
+            {first.updates && first.updates.map((update: any, i: number) => (
                 <Card key={i} className={classes.update}>
                     <CardContent>
                         <Typography variant="subtitle1">{dateString(update.createdOn)}</Typography>
@@ -85,7 +92,6 @@ export default function ProjectPage() {
                     </CardContent>
                 </Card>
             ))}
-
 
         </div>
     );

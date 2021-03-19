@@ -10,12 +10,14 @@ import { RootState } from "../../../store/reducer";
 import { dateString } from "../../../utils";
 import { FormSubmitButton } from "../../../containers/FormSubmitButton/FormSubmitButton";
 import {HOME_PATH, SINGLE_PATH} from "../../../constants/paths";
+import useSnax from "../../../hooks/useSnax";
 
 export default function EditProjectPage() {
 
     const params: { id: string } = useParams();
     const history = useHistory();
     const firestore = useFirestore();
+    const { setSnack } = useSnax();
 
     if (!params.id) {
         history.push("/");
@@ -38,36 +40,36 @@ export default function EditProjectPage() {
         return <div>Loading...</div>
     }
 
-    // Show message if there is no project 
+    // Show message if there is no project
     if (isEmpty(projects)) {
         return <div>Project is empty</div>
     }
 
     // the name field
-    const { 
-        value: name, 
-        bind: bindName, 
-        reset: resetName 
+    const {
+        value: name,
+        bind: bindName,
+        reset: resetName
     } = useInput(projects[params.id].name);
 
     // the description field
-    const { 
-        value: description, 
-        bind: bindDescription, 
-        reset: resetDescription 
+    const {
+        value: description,
+        bind: bindDescription,
+        reset: resetDescription
     } = useInput(projects[params.id].description);
 
     // the deadline field
-    const { 
-        value: deadline, 
-        bind: bindDeadline, 
+    const {
+        value: deadline,
+        bind: bindDeadline,
         reset: resetDeadline
     } = useInput(projects[params.id].deadline);
 
     // the markdown field
-    const { 
-        value: markdown, 
-        bind: bindMarkdown, 
+    const {
+        value: markdown,
+        bind: bindMarkdown,
         reset: resetMarkdown
     } = useInput(projects[params.id].markdown);
 
@@ -78,12 +80,12 @@ export default function EditProjectPage() {
         resetDeadline(undefined);
         resetMarkdown(undefined);
     }
- 
+
     // onSubmit will get called when the submit button is clicked
     async function onSubmit(event: React.SyntheticEvent) {
 
         event.preventDefault();
-        
+
         const updatedProject = {
             name,
             description,
@@ -94,10 +96,11 @@ export default function EditProjectPage() {
         try {
             await firestore.update(`projects/${params.id}`, updatedProject)
             resetForm();
+            setSnack({ msg: "Project updated", type: "success", open: true })
             history.push(SINGLE_PATH.replace(":id", params.id));
 
         } catch (error) {
-            console.error(error);
+            setSnack({ msg: error.toString(), type: "error", open: true })
         }
 
     }
@@ -110,11 +113,12 @@ export default function EditProjectPage() {
             const confirmed = confirm("WARNING: This action is permanent. Proceed?");
             if (!confirmed) return;
             await firestore.update({ collection: "projects", doc: params.id }, updatedData);
+            setSnack({ msg: "Project deleted", type: "success", open: true })
             // TODO: this is hacky and should be fixed
             history.push(HOME_PATH);
-        
+
         } catch(error) {
-            console.error(error);
+            setSnack({ msg: error.toString(), type: "error", open: true });
         }
     }
 

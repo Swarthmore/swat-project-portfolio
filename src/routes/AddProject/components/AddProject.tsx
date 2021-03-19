@@ -9,6 +9,8 @@ import { DatePicker } from "@material-ui/pickers";
 import { useHistory } from "react-router-dom";
 import useInput from "../../../hooks/useInput";
 import { FormSubmitButton } from "../../../containers/FormSubmitButton/FormSubmitButton";
+import useSnax from "../../../hooks/useSnax";
+import {SINGLE_PATH} from "../../../constants/paths";
 
 export default function AddProjectPage() {
 
@@ -18,6 +20,7 @@ export default function AddProjectPage() {
     const firestore = useFirestore();
     const auth = useSelector((state: RootState) => state.firebase.auth);
     const classes = styles();
+    const {setSnack} = useSnax();
 
     const history = useHistory();
 
@@ -85,10 +88,11 @@ export default function AddProjectPage() {
         try {
             const res = await addProject(project);
             resetForm();
-            history.push(`/projects/${res.id}`);
+            setSnack({ type: "success", msg: "Project created success", open: true });
+            history.push(SINGLE_PATH.replace(":id", res.id));
             
         } catch (error) {
-            console.error(error);
+            setSnack({ type: "error", msg: error.toString(), open: true });
         }
 
     }
