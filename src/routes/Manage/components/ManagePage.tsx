@@ -20,6 +20,7 @@ import useUid from "../../../hooks/useUid";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import styles from "./styles";
+import useSnax from "../../../hooks/useSnax";
 
 export default function ManagePage() {
 
@@ -27,6 +28,7 @@ export default function ManagePage() {
     const firestore = useFirestore();
     const { uid } = useUid();
     const classes = styles();
+    const {setSnack} = useSnax();
 
     // at this point we have the user id
     useFirestoreConnect([
@@ -54,8 +56,9 @@ export default function ManagePage() {
             const confirmation = confirm("WARNING: This action is permanent. Click OK to proceed.");
             if (!confirmation) return;
             await firestore.collection("projects").doc(project.id).delete();
+            setSnack({ msg: "Project deleted", type: "success", open: true });
         } catch(error) {
-            console.error(error);
+            setSnack({ msg: error.toString(), type: "error", open: true });
         }
     }
 

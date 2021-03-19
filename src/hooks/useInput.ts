@@ -1,15 +1,3 @@
-/**
- * @description
- * 
- * This file provides React hook for an input field.
- * 
- * @example
- * 
- * const { value, bind, reset } = useInput('');
- * <input type="text" {...bind} />
- * 
- */
-
 import { useState } from "react";
 
 export default function useInput(initialValue: string) {
@@ -18,7 +6,7 @@ export default function useInput(initialValue: string) {
 
     return {
         value,
-        setValue,
+        setValue: () => setValue,
         reset: (val: string|undefined) => val ? setValue(val) : setValue(""),
         bind: {
             value,
