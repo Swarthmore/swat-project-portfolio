@@ -21,6 +21,8 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import styles from "./styles";
 import useSnax from "../../../hooks/useSnax";
+import { Link } from "react-router-dom";
+import {SINGLE_PATH} from "../../../constants/paths";
 
 export default function ManagePage() {
 
@@ -77,7 +79,7 @@ export default function ManagePage() {
                 <TableBody>
                     {projects.map((project: Project) => (
                         <TableRow key={project.id || project.name}>
-                            <TableCell>{project.name}</TableCell>
+                            <TableCell><Link to={SINGLE_PATH.replace(":id", project.id || "")}>{project.name}</Link></TableCell>
                             <TableCell className={classes.descriptionCell}>{project.description.length > 100 ? project.description.substr(0, 100) + "..." : project.description}</TableCell>
                             <TableCell>{project.deadline && new Date(project.deadline).toLocaleDateString()}</TableCell>
                             <TableCell>{dateString(project.meta.createdOn)}</TableCell>

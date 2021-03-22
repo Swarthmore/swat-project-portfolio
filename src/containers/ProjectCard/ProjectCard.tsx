@@ -3,8 +3,9 @@ import { Divider, Collapse, IconButton, Button, Card, CardContent, CardActions, 
 import { useHistory } from "react-router-dom";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import styles from "./styles";
-import { createMeta, dateString } from "../../utils";
+import {createMeta, dateString, sortUpdates} from "../../utils";
 import {SINGLE_PATH} from "../../constants/paths";
+import {ProjectStatusUpdate} from "../../types";
 
 export default function ProjectCard({ project, ...rest }: any) {
 
@@ -27,7 +28,7 @@ export default function ProjectCard({ project, ...rest }: any) {
             />
 
             <CardContent>
-                {project.updates && project.updates.length > 0 && <Typography variant="caption" gutterBottom>Latest update: {dateString(project.updates[0].createdOn)} {project.updates[0].value}</Typography>}
+                {project.updates && project.updates.length > 0 && <Typography variant="caption" gutterBottom>Latest update: {dateString(sortUpdates(Array.from(project.updates))[0].createdOn)} {sortUpdates(Array.from(project.updates))[0].value}</Typography>}
                 <Typography>{project.description}</Typography>
             </CardContent>
 
@@ -39,7 +40,7 @@ export default function ProjectCard({ project, ...rest }: any) {
             </CardActions>
 
             {project.updates && project.updates.length > 0 && <Collapse in={expanded} timeout="auto" unmountOnExit>
-                {project.updates.map((update:any) => (
+                {sortUpdates(Array.from(project.updates)).map((update:ProjectStatusUpdate) => (
                     <Card key={update.value}>
                         <CardContent>
                             <Typography variant="subtitle2">{dateString(update.createdOn)}</Typography>
