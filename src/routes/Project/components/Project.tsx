@@ -7,7 +7,7 @@ import { useFirestoreConnect, populate, isLoaded, isEmpty, useFirestore } from "
 import ReactMarkdown from "react-markdown";
 import PostUpdate from "../../../containers/StatusUpdate/StatusUpdate";
 import firebase from "firebase";
-import { dateString } from "../../../utils";
+import {dateString, sortUpdates} from "../../../utils";
 import {Project} from "../../../types";
 import {RootState} from "../../../store/reducer";
 import useUid from "../../../hooks/useUid";
@@ -84,7 +84,7 @@ export default function ProjectPage() {
 
 
             {first.updates && first.updates.length > 0 && <Typography variant="h4">Updates</Typography>}
-            {first.updates && first.updates.map((update: any, i: number) => (
+            {first.updates && sortUpdates(first.updates).map((update: any, i: number) => (
                 <Card key={i} className={classes.update}>
                     <CardContent>
                         <Typography variant="subtitle1">{dateString(update.createdOn)}</Typography>
