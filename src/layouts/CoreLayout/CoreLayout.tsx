@@ -23,7 +23,7 @@ export default function CoreLayout({ children }: Props) {
             {!uid && <LoginCard />}
             <Navbar />
             <div className={classes.content}>
-                <SideMenu />
+                {uid && <SideMenu/>}
                 <div className={classes.children}>{children}</div>
             </div>
             {snack.open && <Snackbar open={snack.open} autoHideDuration={5000} onClose={() => closeSnack()}>

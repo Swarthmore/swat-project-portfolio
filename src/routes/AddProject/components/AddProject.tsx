@@ -22,6 +22,8 @@ export default function AddProjectPage() {
     const classes = styles();
     const {setSnack} = useSnax();
 
+    // if auth.email is not from swarthmore, log the user out
+
     const history = useHistory();
 
     // the name field

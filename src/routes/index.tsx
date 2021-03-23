@@ -12,12 +12,11 @@ import EditProjectRoute from "./EditProject";
 import AuthIsLoaded from "../containers/AuthIsLoaded";
 
 export default function createRoutes() {
-
     return (
         <CoreLayout>
             <AuthIsLoaded>
                 <Switch>
-                    <Route exact path={HomeRoute.path} component={() => <HomeRoute.component />} />
+                    <Route exact path={HomeRoute.path} component={HomeRoute.component} />
                     {[
                         AddProjectRoute,
                         EditProjectRoute,
@@ -25,9 +24,7 @@ export default function createRoutes() {
                         ProjectRoute,
                         UserRoute,
                         ManageRoute,
-                    ].map((settings: any, i) => (
-                        <Route key={`Route-${i}`} {...settings} />
-                    ))}
+                    ].map((settings: any, i) => <Route key={i} {...settings} />)}
                     <Route component={NotFoundRoute.component} />
                 </Switch>
             </AuthIsLoaded>

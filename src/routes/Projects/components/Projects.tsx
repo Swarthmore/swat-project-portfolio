@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import styles from "./styles";
 import {useFirestoreConnect, populate, isLoaded, isEmpty, firebaseConnect} from "react-redux-firebase";
 import {connect, useSelector} from "react-redux";
-import {useLocation, useParams} from "react-router-dom";
+import {useHistory, useLocation, useParams} from "react-router-dom";
 import { Typography } from "@material-ui/core";
 import ProjectCard from "../../../containers/ProjectCard/ProjectCard";
 import {Project, Team} from "../../../types/index";
@@ -16,6 +16,7 @@ export default function Projects(props: any) {
     const { id }: { id: string } = useParams();
     const { teams, loaded: teamsAreLoaded } = useTeams();
     const { pathname } = useLocation();
+    const history = useHistory();
 
     const populates = [{ child: "meta.createdBy", root: "users" }];
 
@@ -33,6 +34,10 @@ export default function Projects(props: any) {
 
     if (!isLoaded(projects) || !teamsAreLoaded) {
         return <div>Loading...</div>
+    }
+
+    if (isEmpty(projects)) {
+        return <div>No projects found</div>
     }
 
     // filter the projects by team id

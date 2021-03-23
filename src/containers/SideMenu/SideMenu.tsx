@@ -16,6 +16,10 @@ export default function SideMenu() {
     const { uid } = useUid();
     const { teams, loaded } = useTeams();
 
+    if (!uid) {
+        return <div>Not logged in</div>
+    }
+
     const onSelect = (id: string) => {
         history.push(LIST_BY_TEAM.replace(":id", id));
     }

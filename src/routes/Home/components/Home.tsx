@@ -1,14 +1,14 @@
 import React from "react";
 import styles from "./styles";
-import { useHistory } from "react-router-dom";
-
+import { Redirect } from "react-router-dom";
+import useUid from "../../../hooks/useUid";
 
 export default function Home() {
 
     const classes = styles();
-    const history = useHistory();
+    const { uid } = useUid();
 
-    React.useEffect(() => history.push("projects/by-team/all"), []);
-    return <></>
+
+    return uid ? <Redirect to="projects/by-team/all" /> : <div>Login to view projects</div>
 
 }

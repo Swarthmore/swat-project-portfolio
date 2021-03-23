@@ -8,9 +8,9 @@ export default function LoginCard() {
 
     const firebase = useFirebase();
     const classes = styles();
-    
+
     function loginWithGoogle() {
-        return firebase.login({ provider: "google", type: "popup" })
+        return firebase.login({ provider: "google", type: "popup"  })
     }
 
     return (
