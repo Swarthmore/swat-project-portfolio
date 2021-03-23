@@ -12,8 +12,9 @@ import { FormSubmitButton } from "../../../containers/FormSubmitButton/FormSubmi
 import useSnax from "../../../hooks/useSnax";
 import {SINGLE_PATH} from "../../../constants/paths";
 import MD from "react-markdown";
+import gfm from "remark-gfm"
 
-const markdownCheat = "https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet";
+export const markdownCheat = "https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet";
 
 export default function AddProjectPage() {
 
@@ -123,7 +124,7 @@ export default function AddProjectPage() {
                     ? (
                         <div className={classes.field}>
                             <Typography variant="caption" gutterBottom>Markdown Preview</Typography>
-                            <MD source={markdown} className={classes.markdown} />
+                            <MD plugins={[gfm]} source={markdown} className={classes.markdown} />
                             <Button fullWidth size="large" variant="contained" onClick={closeMarkdownPreview}>Edit</Button>
                         </div>
 

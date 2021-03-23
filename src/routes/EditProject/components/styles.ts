@@ -27,5 +27,11 @@ export default makeStyles(theme => ({
     },
     updates: {
         marginTop: theme.spacing(2)
+    },
+    markdown: {
+        border: "1px dashed #ccc",
+        boxSizing: "border-box",
+        padding: theme.spacing(1),
+        marginTop: theme.spacing(1)
     }
 }));

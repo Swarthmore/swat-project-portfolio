@@ -1,5 +1,5 @@
-import React from "react";
-import { TextField, Button, Typography, Card, CardContent, CardActions } from "@material-ui/core";
+import React, {useState} from "react";
+import {TextField, Button, Typography, Card, CardContent, CardActions, Link} from "@material-ui/core";
 import { useFirestore, useFirestoreConnect, populate, isLoaded, isEmpty } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 import styles from "./styles";
@@ -11,6 +11,9 @@ import { dateString } from "../../../utils";
 import { FormSubmitButton } from "../../../containers/FormSubmitButton/FormSubmitButton";
 import {HOME_PATH, SINGLE_PATH} from "../../../constants/paths";
 import useSnax from "../../../hooks/useSnax";
+import MD from "react-markdown";
+import {markdownCheat} from "../../AddProject/components/AddProject";
+import gfm from "remark-gfm"
 
 export default function EditProjectPage() {
 
@@ -24,6 +27,8 @@ export default function EditProjectPage() {
     }
 
     const classes = styles();
+
+    const [mdPreview, setMdPreview] = useState(false);
 
     const populates = [{ child: "meta.createdBy", root: "users" }];
     const collection = "projects";
@@ -122,6 +127,14 @@ export default function EditProjectPage() {
         }
     }
 
+    const handlePreviewClick = () => {
+        setMdPreview(true);
+    }
+
+    const closeMarkdownPreview = () => {
+        setMdPreview(false);
+    }
+
     return (
         <div className={classes.root}>
             <Typography variant="h3" gutterBottom>Edit Project</Typography>
@@ -129,7 +142,20 @@ export default function EditProjectPage() {
                 <TextField className={classes.field} label="Enter a name for your project" variant="filled" required {...bindName} />
                 <TextField className={classes.field} label="Give your project a short description" variant="filled" required {...bindDescription} />
                 <DatePicker className={classes.field} format="MM/DD/yyyy" {...bindDeadline} />
-                <TextField className={classes.field} label="Project Markdown" rows="10" rowsMax="10" variant="filled" multiline fullWidth {...bindMarkdown} />
+
+                {mdPreview ? (
+                    <div className={classes.field}>
+                        <Typography variant="caption" gutterBottom>Markdown Preview</Typography>
+                        <MD plugins={[gfm]} source={markdown} className={classes.markdown} />
+                        <Button fullWidth size="large" variant="contained" onClick={closeMarkdownPreview}>Edit</Button>
+                    </div>
+                ) : (
+                    <>
+                        <Link href={markdownCheat} target="_blank">Markdown Cheat Sheet</Link>
+                        <TextField className={classes.field} label="Project Markdown" rows="10" rowsMax="10" variant="filled" multiline fullWidth {...bindMarkdown} />
+                        <Button size="large" variant="contained" onClick={handlePreviewClick} disabled={mdPreview}>Preview Markdown</Button>
+                    </>
+                )}
                 <FormSubmitButton label="Save" />
             </form>
 
