@@ -25,7 +25,7 @@ export default function Navbar() {
     return (
         <AppBar position="static">
             <Toolbar>
-                <Typography variant="h6" className={classes.title} color="inherit"><Link color="inherit" href="/">{appConfig.name}</Link></Typography>
+                <Typography variant="h6" className={classes.title} color="inherit" onClick={() => history.push("/")}>{appConfig.name}</Typography>
                 {/* Display the logout button if the user is logged in */}
                 {isLoaded(auth) && !isEmpty(auth) && <ProfileButton />}
                 {isLoaded(auth) && !isEmpty(auth) && <LogoutButton />}
