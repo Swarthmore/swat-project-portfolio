@@ -20,7 +20,7 @@ export default makeStyles(theme => ({
         marginTop: theme.spacing(2),
         maxWidth: 200
     },
-    preview: {
+    markdown: {
         border: "1px dashed #ccc",
         boxSizing: "border-box",
         padding: theme.spacing(1),

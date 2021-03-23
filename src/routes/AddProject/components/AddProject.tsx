@@ -1,4 +1,4 @@
-import { TextField, Button, Typography } from "@material-ui/core";
+import { TextField, Button, Typography, Link } from "@material-ui/core";
 import React from "react";
 import { useFirestore } from "react-redux-firebase";
 import { useSelector } from "react-redux";
@@ -11,6 +11,9 @@ import useInput from "../../../hooks/useInput";
 import { FormSubmitButton } from "../../../containers/FormSubmitButton/FormSubmitButton";
 import useSnax from "../../../hooks/useSnax";
 import {SINGLE_PATH} from "../../../constants/paths";
+import MD from "react-markdown";
+
+const markdownCheat = "https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet";
 
 export default function AddProjectPage() {
 
@@ -99,6 +102,14 @@ export default function AddProjectPage() {
 
     }
 
+    const handlePreviewClick = () => {
+        setMdPreview(true);
+    }
+
+    const closeMarkdownPreview = () => {
+        setMdPreview(false);
+    }
+
     return (
         <div className={classes.root}>
             <Typography variant="h3">Add Project</Typography>
@@ -107,13 +118,30 @@ export default function AddProjectPage() {
                 <TextField className={classes.field} label="Give your project a short description" variant="filled" required {...bindDescription} />
 
                 <DatePicker label="Project Deadline" className={classes.field} format="MM/DD/yyyy" disablePast={true} {...bindDeadline} />
-                
-                <div className={classes.field}>
-                    <label>
-                        Tell us about your project. You can use Markdown, but keep it under 400 characters
-                    </label>
-                    <TextField className={classes.field} fullWidth label="Markdown description" rows={10} rowsMax={10} variant="filled" multiline {...bindMarkdown} />
-                </div>
+
+                {mdPreview
+                    ? (
+                        <div className={classes.field}>
+                            <Typography variant="caption" gutterBottom>Markdown Preview</Typography>
+                            <MD source={markdown} className={classes.markdown} />
+                            <Button fullWidth size="large" variant="contained" onClick={closeMarkdownPreview}>Edit</Button>
+                        </div>
+
+                    ) : (
+                        <>
+                            <div className={classes.field}>
+                                <label>
+                                    Tell us about your project. You can use Markdown, but keep it under 400 characters
+                                </label>
+                                <br/>
+                                <Link href={markdownCheat} target="_blank">Markdown Cheat Sheet</Link>
+                                <TextField className={classes.field} fullWidth label="Markdown description" rows={10} rowsMax={10}
+                                           variant="filled" multiline {...bindMarkdown} />
+                            </div>
+                            <Button size="large" variant="contained" onClick={handlePreviewClick} disabled={mdPreview}>Preview Markdown</Button>
+                        </>
+                )}
+
 
                 <FormSubmitButton label="Submit" />
             </form>
