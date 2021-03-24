@@ -4,7 +4,8 @@ import styles from "./styles";
 import { useParams, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useFirestoreConnect, populate, isLoaded, isEmpty, useFirestore } from "react-redux-firebase";
-import ReactMarkdown from "react-markdown";
+import MD from "react-markdown";
+import gfm from "remark-gfm"
 import PostUpdate from "../../../containers/StatusUpdate/StatusUpdate";
 import firebase from "firebase";
 import {dateString, sortUpdates} from "../../../utils";
@@ -12,6 +13,8 @@ import {Project} from "../../../types";
 import {RootState} from "../../../store/reducer";
 import useUid from "../../../hooks/useUid";
 import useSnax from "../../../hooks/useSnax";
+import {Skeleton} from "@material-ui/lab";
+import {Image} from "@material-ui/icons";
 
 export default function ProjectPage() {
 
@@ -71,27 +74,25 @@ export default function ProjectPage() {
     
     return (
         <div className={classes.root}>
+
+
+            <Typography variant="h1" align="center" className={classes.title}>{first.name}</Typography>
+            <Typography variant="subtitle1" align="center">Started on {dateString(first.meta.createdOn)}</Typography>
+            <Typography variant="subtitle1" align="center">{first.description}</Typography>
+
             {isOwner && <PostUpdate onSubmit={onSubmit} />}
 
-            <Card className={classes.card}>
-                <CardContent>
-                    <Typography variant="h2">{first.name}</Typography>
-                    <Typography variant="subtitle1">Started on {dateString(first.meta.createdOn)}</Typography>
-                    <Typography variant="subtitle2">{first.description}</Typography>
-                    {first.markdown && <ReactMarkdown>{first.markdown}</ReactMarkdown>}
-                </CardContent>
-            </Card>
+            {first.updates && first.updates.length > 0 && <Typography variant="h2" align="center" className={classes.subtitle}>Project Updates</Typography>}
 
-
-            {first.updates && first.updates.length > 0 && <Typography variant="h4">Updates</Typography>}
             {first.updates && sortUpdates(first.updates).map((update: any, i: number) => (
-                <Card key={i} className={classes.update}>
-                    <CardContent>
-                        <Typography variant="subtitle1">{dateString(update.createdOn)}</Typography>
-                        <Typography>{update.value}</Typography>
-                    </CardContent>
-                </Card>
+                <div key={i} className={classes.update}>
+                    <Typography variant="subtitle1">{dateString(update.createdOn)}</Typography>
+                    <Typography>{update.value}</Typography>
+                </div>
             ))}
+
+            {first.markdown && <Typography variant="h2" align="center" className={classes.subtitle}>About This Project</Typography>}
+            {first.markdown && <MD plugins={[gfm]}>{first.markdown}</MD>}
 
         </div>
     );
