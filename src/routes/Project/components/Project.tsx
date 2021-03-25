@@ -75,7 +75,6 @@ export default function ProjectPage() {
     return (
         <div className={classes.root}>
 
-
             <Typography variant="h1" align="center" className={classes.title}>{first.name}</Typography>
             <Typography variant="subtitle1" align="center">Started on {dateString(first.meta.createdOn)}</Typography>
             <Typography variant="subtitle1" align="center">{first.description}</Typography>

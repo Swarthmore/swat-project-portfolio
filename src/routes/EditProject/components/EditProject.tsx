@@ -118,7 +118,7 @@ export default function EditProjectPage() {
             const confirmed = confirm("WARNING: This action is permanent. Proceed?");
             if (!confirmed) return;
             await firestore.update({ collection: "projects", doc: params.id }, updatedData);
-            setSnack({ msg: "Project deleted", type: "success", open: true })
+            setSnack({ msg: "Status update deleted", type: "success", open: true })
             // TODO: this is hacky and should be fixed
             history.push(HOME_PATH);
 
