@@ -16,7 +16,10 @@ export default function ProjectCard({ project, ...rest }: any) {
 
     const handleExpandClick = () => setExpanded(!expanded);
 
+
+    console.log(project)
     return (
+
         <Card {...rest}>
 
             <CardHeader
@@ -28,15 +31,21 @@ export default function ProjectCard({ project, ...rest }: any) {
             />
 
             <CardContent>
-                {project.updates && project.updates.length > 0 && <Typography variant="caption" gutterBottom>Latest update: {dateString(sortUpdates(Array.from(project.updates))[0].createdOn)} {sortUpdates(Array.from(project.updates))[0].value}</Typography>}
-                <Typography>{project.description}</Typography>
+                {project.updates && project.updates.length > 0 && (
+                    <>
+                        <Typography variant="body2" color="textSecondary">{dateString(sortUpdates(Array.from(project.updates))[0].createdOn)}</Typography>
+                        <Typography variant="body2" color="textSecondary">{sortUpdates(Array.from(project.updates))[0].value}</Typography>
+                    </>
+                )}
             </CardContent>
 
             <CardActions disableSpacing>
                 <Button onClick={() => history.push(SINGLE_PATH.replace(":id", project.id))}>Read More</Button>
-                <IconButton onClick={handleExpandClick} disabled={project.updates && project.updates.length === 0} style={{ marginLeft: "auto" }}>
+                <Button onClick={handleExpandClick} disabled={project.updates && project.updates.length === 0} style={{ marginLeft: "auto" }} endIcon={
                     <ExpandMoreIcon className={expanded ? classes.expand : classes.expandOpen} />
-                </IconButton>
+                }>
+                    Recent Activity
+                </Button>
             </CardActions>
 
             {project.updates && project.updates.length > 0 && <Collapse in={expanded} timeout="auto" unmountOnExit>
