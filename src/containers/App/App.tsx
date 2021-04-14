@@ -17,7 +17,7 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import styles from "./styles";
 import Props from "./props";
-import { MuiTheme } from "../../theme";
+import makeTheme from "../../theme";
 import SnackbarProvider from "../../contexts/Snackbar";
 
 export default function App({ store, routes }: Props) {
@@ -35,7 +35,7 @@ export default function App({ store, routes }: Props) {
     return (
         <Provider store={store}>
             <ReactReduxFirebaseProvider {...rrfProps}>
-                <ThemeProvider theme={MuiTheme}>
+                <ThemeProvider theme={makeTheme()}>
                     <SnackbarProvider>
                         <MuiPickersUtilsProvider utils={MomentUtils}>
                             <HashRouter>
