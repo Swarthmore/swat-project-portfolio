@@ -16,8 +16,6 @@ export default function ProjectCard({ project, ...rest }: any) {
 
     const handleExpandClick = () => setExpanded(!expanded);
 
-
-    console.log(project)
     return (
 
         <Card {...rest}>
