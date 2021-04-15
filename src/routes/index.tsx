@@ -23,7 +23,7 @@ export default function createRoutes() {
                         ProjectsRoute,
                         ProjectRoute,
                         UserRoute,
-                        ManageRoute,
+                        ManageRoute
                     ].map((settings: any, i) => <Route key={i} {...settings} />)}
                     <Route component={NotFoundRoute.component} />
                 </Switch>
