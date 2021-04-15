@@ -49,7 +49,6 @@ export default function SideMenu() {
                 {uid && <MenuItem onClick={onAddClick}>
                     {lastPathPart === "add" ? <strong>Add Project</strong> : "Add Project"}
                 </MenuItem>}
-                <MenuItem onClick={() => history.push("/theme")}>Theme Preview</MenuItem>
             </MenuList>
         );
 
