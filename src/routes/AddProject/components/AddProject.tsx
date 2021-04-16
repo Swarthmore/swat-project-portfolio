@@ -124,7 +124,7 @@ export default function AddProjectPage() {
                     ? (
                         <div className={classes.field}>
                             <Typography variant="caption" gutterBottom>Markdown Preview</Typography>
-                            <MD plugins={[gfm]} source={markdown} className={classes.markdown} />
+                            <MD plugins={[gfm]} children={markdown} className={classes.markdown} />
                             <Button fullWidth size="large" variant="contained" onClick={closeMarkdownPreview}>Edit</Button>
                         </div>
 
