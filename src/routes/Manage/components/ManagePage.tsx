@@ -12,7 +12,7 @@ import {
     TableContainer,
     TableRow,
     Button,
-    IconButton
+    IconButton, Typography
 } from "@material-ui/core";
 import { Project } from "../../../types";
 import { dateString } from "../../../utils";
@@ -79,10 +79,25 @@ export default function ManagePage() {
                 <TableBody>
                     {projects.map((project: Project) => (
                         <TableRow key={project.id || project.name}>
-                            <TableCell><Link to={SINGLE_PATH.replace(":id", project.id || "")}>{project.name}</Link></TableCell>
-                            <TableCell className={classes.descriptionCell}>{project.description.length > 100 ? project.description.substr(0, 100) + "..." : project.description}</TableCell>
-                            <TableCell>{project.deadline && new Date(project.deadline).toLocaleDateString()}</TableCell>
-                            <TableCell>{dateString(project.meta.createdOn)}</TableCell>
+                            <TableCell>
+                                <Link
+                                    to={SINGLE_PATH.replace(":id", project.id || "")}
+                                    style={{ textDecoration: "none" }}
+                                >
+                                    <Typography color="secondary">{project.name}</Typography>
+                                </Link>
+                            </TableCell>
+                            <TableCell className={classes.descriptionCell}>
+                                {project.description.length > 100
+                                    ? project.description.substr(0, 100) + "..."
+                                    : project.description}
+                            </TableCell>
+                            <TableCell>
+                                {project.deadline && new Date(project.deadline).toLocaleDateString()}
+                            </TableCell>
+                            <TableCell>
+                                {dateString(project.meta.createdOn)}
+                            </TableCell>
                             <TableCell>
                                 <IconButton onClick={e => onEditClick(e, project)}>
                                     <EditIcon />

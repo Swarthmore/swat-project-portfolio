@@ -13,6 +13,7 @@ import useSnax from "../../../hooks/useSnax";
 import {SINGLE_PATH} from "../../../constants/paths";
 import MD from "react-markdown";
 import gfm from "remark-gfm"
+import MarkdownRenderer from "../../../containers/MarkdownRenderer/MarkdownRenderer";
 
 export const markdownCheat = "https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet";
 
@@ -124,7 +125,7 @@ export default function AddProjectPage() {
                     ? (
                         <div className={classes.field}>
                             <Typography variant="caption" gutterBottom>Markdown Preview</Typography>
-                            <MD plugins={[gfm]} children={markdown} className={classes.markdown} />
+                            <MarkdownRenderer children={markdown} />
                             <Button fullWidth size="large" variant="contained" onClick={closeMarkdownPreview}>Edit</Button>
                         </div>
 
@@ -135,7 +136,7 @@ export default function AddProjectPage() {
                                     Tell us about your project. You can use Markdown, but keep it under 400 characters
                                 </label>
                                 <br/>
-                                <Link href={markdownCheat} target="_blank">Markdown Cheat Sheet</Link>
+                                <Link href={markdownCheat} target="_blank" color="secondary">Markdown Cheat Sheet</Link>
                                 <TextField className={classes.field} fullWidth label="Markdown description" rows={10} rowsMax={10}
                                            variant="filled" multiline {...bindMarkdown} />
                             </div>
