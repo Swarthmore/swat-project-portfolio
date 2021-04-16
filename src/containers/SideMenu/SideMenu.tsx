@@ -5,7 +5,7 @@ import {useHistory, useLocation} from "react-router-dom";
 import useTeams from "../../hooks/useTeams";
 import useUid from "../../hooks/useUid";
 import {Team} from "../../types";
-import {ADD_PROJECT_ROUTE, LIST_BY_TEAM} from "../../constants/paths";
+import {ADD_PROJECT_ROUTE, LIST_BY_TEAM, MANAGE_PATH} from "../../constants/paths";
 
 export default function SideMenu() {
 
@@ -32,6 +32,11 @@ export default function SideMenu() {
         history.push(ADD_PROJECT_ROUTE);
     }
 
+    const onManageClick = () => {
+        history.push(MANAGE_PATH);
+    }
+
+
     const lastPathPart = pathname.split("/").pop();
 
     return !loaded
@@ -41,14 +46,21 @@ export default function SideMenu() {
                 {teams.map((team: Team) => <MenuItem key={team.id} onClick={() => onSelect(team.id)}>
                     {lastPathPart === team.id ? <strong>{team.name}</strong> : team.name}
                 </MenuItem>)}
-                <Divider />
+                <Divider style={{ marginTop: "5px", marginBottom: "5px" }} />
                 <MenuItem onClick={onShowAllClick}>
                     {lastPathPart === "all" ? <strong>All Projects</strong> : "All Projects"}
                 </MenuItem>
-                <Divider />
-                {uid && <MenuItem onClick={onAddClick}>
-                    {lastPathPart === "add" ? <strong>Add Project</strong> : "Add Project"}
-                </MenuItem>}
+                <Divider style={{ marginTop: "5px", marginBottom: "5px" }} />
+                {uid && (
+                    <div>
+                        <MenuItem onClick={onAddClick}>
+                            {lastPathPart === "add" ? <strong>Add Project</strong> : "Add Project"}
+                        </MenuItem>
+                        <MenuItem onClick={onManageClick}>
+                            {lastPathPart === "manage" ? <strong>My Projects</strong> : "My Projects"}
+                        </MenuItem>
+                    </div>
+                )}
             </MenuList>
         );
 
