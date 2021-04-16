@@ -15,6 +15,7 @@ import ProfileButton from "./ProfileButton/ProfileButton";
 import styles from "./styles";
 import { appConfig } from "../../config";
 import { useHistory } from "react-router-dom";
+import DarkModeSwitch from "../DarkModeSwitch/DarkModeSwitch";
 
 export default function Navbar() {
 
@@ -26,6 +27,7 @@ export default function Navbar() {
         <AppBar position="static">
             <Toolbar>
                 <Typography variant="h6" className={classes.title} color="inherit" onClick={() => history.push("/")}>{appConfig.name}</Typography>
+                <DarkModeSwitch />
                 {/* Display the logout button if the user is logged in */}
                 {isLoaded(auth) && !isEmpty(auth) && <ProfileButton />}
                 {isLoaded(auth) && !isEmpty(auth) && <LogoutButton />}

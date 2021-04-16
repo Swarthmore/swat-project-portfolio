@@ -14,6 +14,7 @@ import useSnax from "../../../hooks/useSnax";
 import MD from "react-markdown";
 import {markdownCheat} from "../../AddProject/components/AddProject";
 import gfm from "remark-gfm"
+import MarkdownRenderer from "../../../containers/MarkdownRenderer/MarkdownRenderer";
 
 export default function EditProjectPage() {
 
@@ -146,12 +147,12 @@ export default function EditProjectPage() {
                 {mdPreview ? (
                     <div className={classes.field}>
                         <Typography variant="caption" gutterBottom>Markdown Preview</Typography>
-                        <MD plugins={[gfm]} source={markdown} className={classes.markdown} />
+                        <MarkdownRenderer children={markdown} />
                         <Button fullWidth size="large" variant="contained" onClick={closeMarkdownPreview}>Edit</Button>
                     </div>
                 ) : (
                     <>
-                        <Link href={markdownCheat} target="_blank">Markdown Cheat Sheet</Link>
+                        <Link href={markdownCheat} target="_blank" color="secondary">Markdown Cheat Sheet</Link>
                         <TextField className={classes.field} label="Project Markdown" rows="10" rowsMax="10" variant="filled" multiline fullWidth {...bindMarkdown} />
                         <Button size="large" variant="contained" onClick={handlePreviewClick} disabled={mdPreview}>Preview Markdown</Button>
                     </>

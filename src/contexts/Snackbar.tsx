@@ -22,7 +22,7 @@ export default function({ children }: { children: JSX.Element }) {
         open: false
     });
 
-    return <SnackbarContext.Provider value={{ snack, setSnack}}>
+    return <SnackbarContext.Provider value={{ snack, setSnack }}>
         {children}
     </SnackbarContext.Provider>
 }

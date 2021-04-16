@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardContent, Typography, Divider } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import styles from "./styles";
 import { useParams, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -9,12 +9,10 @@ import gfm from "remark-gfm"
 import PostUpdate from "../../../containers/StatusUpdate/StatusUpdate";
 import firebase from "firebase";
 import {dateString, sortUpdates} from "../../../utils";
-import {Project} from "../../../types";
 import {RootState} from "../../../store/reducer";
 import useUid from "../../../hooks/useUid";
 import useSnax from "../../../hooks/useSnax";
-import {Skeleton} from "@material-ui/lab";
-import {Image} from "@material-ui/icons";
+import MarkdownRenderer from "../../../containers/MarkdownRenderer/MarkdownRenderer";
 
 export default function ProjectPage() {
 
@@ -91,7 +89,7 @@ export default function ProjectPage() {
             ))}
 
             {first.markdown && <Typography variant="h2" align="center" className={classes.subtitle}>About This Project</Typography>}
-            {first.markdown && <MD plugins={[gfm]}>{first.markdown}</MD>}
+            {first.markdown && <MarkdownRenderer children={first.markdown} />}
 
         </div>
     );
