@@ -27,7 +27,7 @@ export default function StatusUpdate({ onSubmit }: { onSubmit: (val: string) => 
     
     return (
         <div className={classes.root}>
-            <TextField value={val} onChange={onChange} fullWidth variant="filled" label="Share an update about this project" />
+            <TextField value={val} onChange={onChange} fullWidth variant="filled" label="Share an update about this project"  color="secondary" />
             <Button className={classes.button} color="primary" variant="contained" onClick={() => onClick(val)} disabled={val.length < 5}>Post Update</Button>
         </div>
     )

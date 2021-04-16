@@ -140,8 +140,8 @@ export default function EditProjectPage() {
         <div className={classes.root}>
             <Typography variant="h3" gutterBottom>Edit Project</Typography>
             <form className={classes.form} onSubmit={onSubmit}>
-                <TextField className={classes.field} label="Enter a name for your project" variant="filled" required {...bindName} />
-                <TextField className={classes.field} label="Give your project a short description" variant="filled" required {...bindDescription} />
+                <TextField color="secondary" className={classes.field} label="Enter a name for your project" variant="filled" required {...bindName} />
+                <TextField color="secondary" className={classes.field} label="Give your project a short description" variant="filled" required {...bindDescription} />
                 <DatePicker className={classes.field} format="MM/DD/yyyy" {...bindDeadline} />
 
                 {mdPreview ? (
@@ -153,7 +153,7 @@ export default function EditProjectPage() {
                 ) : (
                     <>
                         <Link href={markdownCheat} target="_blank" color="secondary">Markdown Cheat Sheet</Link>
-                        <TextField className={classes.field} label="Project Markdown" rows="10" rowsMax="10" variant="filled" multiline fullWidth {...bindMarkdown} />
+                        <TextField color="secondary" className={classes.field} label="Project Markdown" rows="10" rowsMax="10" variant="filled" multiline fullWidth {...bindMarkdown} />
                         <Button size="large" variant="contained" onClick={handlePreviewClick} disabled={mdPreview}>Preview Markdown</Button>
                     </>
                 )}
