@@ -36,10 +36,14 @@ function ReadMoreIconButton(props: IconButtonProps) {
     )
 }
 
-function ExpandIconButton(props: IconButtonProps & { tooltipMsg: string }) {
+interface ExpandIconButtonProps extends IconButtonProps {
+    tooltipMsg: string
+}
+
+function ExpandIconButton({ tooltipMsg, ...rest }: ExpandIconButtonProps) {
     return (
-        <Tooltip title={props.tooltipMsg}>
-            <IconButton {...props}>
+        <Tooltip title={tooltipMsg}>
+            <IconButton {...rest}>
                 <ExpandMoreIcon />
             </IconButton>
         </Tooltip>
@@ -80,7 +84,7 @@ export default function PCard({ project, ...rest }: PCardProps) {
 
             <CardContent className={classes.content}>
                 {firstUpdate && (
-                    <Typography variant="body1">
+                    <Typography variant="body2">
                         {firstUpdate.value}
                     </Typography>
                 )}

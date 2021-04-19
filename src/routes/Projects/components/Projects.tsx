@@ -55,7 +55,7 @@ export default function Projects(props: any) {
             {filteredProjects.length > 0 && (
                 <Grid container spacing={3}>
                     {filteredProjects.map((project: Project) => (
-                        <Grid item md={3} key={project.id} className={classes.gridItem}>
+                        <Grid item lg={3} key={project.id} className={classes.gridItem}>
                             <PCard project={project} />
                         </Grid>
                     ))}
