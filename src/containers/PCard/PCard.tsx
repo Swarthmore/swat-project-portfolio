@@ -12,6 +12,8 @@ import {More} from "@material-ui/icons";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {useState} from "react";
 import {sortUpdates} from "../../utils";
+import {SINGLE_PATH} from "../../constants/paths";
+import {useHistory} from "react-router-dom";
 
 export interface PCardProps {
     project: Project &
@@ -47,6 +49,7 @@ function ExpandIconButton(props: IconButtonProps & { tooltipMsg: string }) {
 export default function PCard({ project, ...rest }: PCardProps) {
 
     const classes = useStyles();
+    const history = useHistory();
 
     const [isExpanded, setIsExpanded] = useState(false);
 
@@ -74,6 +77,7 @@ export default function PCard({ project, ...rest }: PCardProps) {
                     />
                 }
             />
+
             <CardContent className={classes.content}>
                 {firstUpdate && (
                     <Typography variant="body1">
@@ -83,7 +87,7 @@ export default function PCard({ project, ...rest }: PCardProps) {
             </CardContent>
 
             <CardActions className={classes.actions}>
-                <ReadMoreIconButton />
+                <ReadMoreIconButton onClick={() => history.push(SINGLE_PATH.replace(":id", project.id || ""))} />
                 {firstUpdate && (
                     <>
                         <Typography className={classes.updateDate} variant="caption" align="center" color="textSecondary">

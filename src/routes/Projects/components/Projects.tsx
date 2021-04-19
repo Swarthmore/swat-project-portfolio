@@ -1,10 +1,9 @@
 import React from "react";
 import styles from "./styles";
-import {useFirestoreConnect, populate, isLoaded, isEmpty, firebaseConnect} from "react-redux-firebase";
-import {connect, useSelector} from "react-redux";
-import {useHistory, useLocation, useParams} from "react-router-dom";
+import {useFirestoreConnect, populate, isLoaded, isEmpty} from "react-redux-firebase";
+import {useSelector} from "react-redux";
+import {useLocation, useParams} from "react-router-dom";
 import {Grid, Typography} from "@material-ui/core";
-import ProjectCard from "../../../containers/ProjectCard/ProjectCard";
 import {Project, Team} from "../../../types/index";
 import { PageTitle } from "../../../containers/PageTitle";
 import {RootState} from "../../../store/reducer";
@@ -17,7 +16,6 @@ export default function Projects(props: any) {
     const { id }: { id: string } = useParams();
     const { teams, loaded: teamsAreLoaded } = useTeams();
     const { pathname } = useLocation();
-    const history = useHistory();
 
     const populates = [{ child: "meta.createdBy", root: "users" }];
 
@@ -55,7 +53,6 @@ export default function Projects(props: any) {
             <PageTitle title={teamName} />
             {filteredProjects.length === 0 && <Typography variant="subtitle1">This team doesn't have any projects posted yet</Typography>}
             {filteredProjects.length > 0 && (
-
                 <Grid container spacing={3}>
                     {filteredProjects.map((project: Project) => (
                         <Grid item md={3} key={project.id} className={classes.gridItem}>
@@ -63,7 +60,6 @@ export default function Projects(props: any) {
                         </Grid>
                     ))}
                 </Grid>
-
             )}
         </div>
     );
