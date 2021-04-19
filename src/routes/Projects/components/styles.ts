@@ -7,5 +7,13 @@ export default makeStyles(theme => ({
     row: {
         marginTop: theme.spacing(1),
         marginBottom: theme.spacing(1)
+    },
+    cardGrid: {
+        display: "flex",
+        flexDirection: "row"
+    },
+    gridItem: {
+        display: "flex",
+        flexGrow: 1
     }
 }));
