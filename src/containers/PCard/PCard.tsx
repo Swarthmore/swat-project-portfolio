@@ -10,10 +10,10 @@ import {
 import useStyles from "./styles";
 import {More} from "@material-ui/icons";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import {useState} from "react";
+import React, {useState} from "react";
 import {sortUpdates} from "../../utils";
-import {SINGLE_PATH} from "../../constants/paths";
 import {useHistory} from "react-router-dom";
+import ProjectDialog from "../ProjectDialog/ProjectDialog";
 
 export interface PCardProps {
     project: Project &
@@ -56,8 +56,11 @@ export default function PCard({ project, ...rest }: PCardProps) {
     const history = useHistory();
 
     const [isExpanded, setIsExpanded] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     const handleExpandClick = () => setIsExpanded(!isExpanded);
+    const handleClose = () => setIsOpen(false);
+    const handleOpen = () => setIsOpen(true);
 
     const parseCreatedOnToDate = (str: string) => {
         const date = new Date(parseInt(str));
@@ -70,55 +73,60 @@ export default function PCard({ project, ...rest }: PCardProps) {
 
     return (
 
-        <Card className={classes.root} {...rest}>
-            
-            <CardHeader
-                title={project.name}
-                subheader={`${project.meta.createdBy.displayName} on ${parseCreatedOnToDate(project.meta.createdOn)}`}
-                avatar={
-                    <Avatar
-                        src={project.meta.createdBy.avatarUrl}
-                    />
-                }
-            />
+            <>
 
-            <CardContent className={classes.content}>
-                {firstUpdate && (
-                    <Typography variant="body2">
-                        {firstUpdate.value}
-                    </Typography>
-                )}
-            </CardContent>
+                <ProjectDialog project={project} open={isOpen} handleClose={handleClose} />
 
-            <CardActions className={classes.actions}>
-                <ReadMoreIconButton onClick={() => history.push(SINGLE_PATH.replace(":id", project.id || ""))} />
-                {firstUpdate && (
-                    <>
-                        <Typography className={classes.updateDate} variant="caption" align="center" color="textSecondary">
-                            {parseCreatedOnToDate(firstUpdate.createdOn)}
+                <Card className={classes.root} {...rest}>
+
+                <CardHeader
+                    title={project.name}
+                    subheader={`${project.meta.createdBy.displayName} on ${parseCreatedOnToDate(project.meta.createdOn)}`}
+                    avatar={
+                        <Avatar
+                            src={project.meta.createdBy.avatarUrl}
+                        />
+                    }
+                />
+
+                <CardContent className={classes.content}>
+                    {firstUpdate && (
+                        <Typography variant="body2">
+                            {firstUpdate.value}
                         </Typography>
-                        {project.updates && project.updates?.length > 0 && (
-                            <ExpandIconButton
-                                className={isExpanded ? classes.expand : classes.expandOpen}
-                                onClick={handleExpandClick}
-                                tooltipMsg={`${project.updates.length} more update${project.updates.length  > 1 ? "s" : ""}`}
-                            />
-                        )}
-                    </>
+                    )}
+                </CardContent>
+
+                <CardActions className={classes.actions}>
+                    <ReadMoreIconButton onClick={handleOpen} />
+                    {firstUpdate && (
+                        <>
+                            <Typography className={classes.updateDate} variant="caption" align="center" color="textSecondary">
+                                {parseCreatedOnToDate(firstUpdate.createdOn)}
+                            </Typography>
+                            {project.updates && project.updates?.length > 0 && (
+                                <ExpandIconButton
+                                    className={isExpanded ? classes.expand : classes.expandOpen}
+                                    onClick={handleExpandClick}
+                                    tooltipMsg={`${project.updates.length} more update${project.updates.length  > 1 ? "s" : ""}`}
+                                />
+                            )}
+                        </>
+                    )}
+                </CardActions>
+
+                {project.updates && project.updates?.length > 0 && (
+                    <Collapse in={isExpanded} timeout="auto" unmountOnExit={true}>
+                        {sortUpdates(Array.from(project.updates)).map(update => (
+                           <CardContent key={update.value}>
+                               <Typography variant="h6">{parseCreatedOnToDate(update.createdOn)}</Typography>
+                               <Typography variant="body2">{update.value}</Typography>
+                           </CardContent>
+                        ))}
+                    </Collapse>
                 )}
-            </CardActions>
 
-            {project.updates && project.updates?.length > 0 && (
-                <Collapse in={isExpanded} timeout="auto" unmountOnExit={true}>
-                    {sortUpdates(Array.from(project.updates)).map(update => (
-                       <CardContent key={update.value}>
-                           <Typography variant="h6">{parseCreatedOnToDate(update.createdOn)}</Typography>
-                           <Typography variant="body2">{update.value}</Typography>
-                       </CardContent>
-                    ))}
-                </Collapse>
-            )}
-
-        </Card>
+            </Card>
+        </>
     )
 }
