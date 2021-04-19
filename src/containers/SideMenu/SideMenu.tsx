@@ -42,26 +42,27 @@ export default function SideMenu() {
     return !loaded
         ? <>Loading</>
         : (
-            <MenuList className={classes.root}>
-                {teams.map((team: Team) => <MenuItem key={team.id} onClick={() => onSelect(team.id)}>
-                    {lastPathPart === team.id ? <strong>{team.name}</strong> : team.name}
-                </MenuItem>)}
-                <Divider style={{ marginTop: "5px", marginBottom: "5px" }} />
-                <MenuItem onClick={onShowAllClick}>
-                    {lastPathPart === "all" ? <strong>All Projects</strong> : "All Projects"}
-                </MenuItem>
-                <Divider style={{ marginTop: "5px", marginBottom: "5px" }} />
-                {uid && (
-                    <div>
-                        <MenuItem onClick={onAddClick}>
-                            {lastPathPart === "add" ? <strong>Add Project</strong> : "Add Project"}
-                        </MenuItem>
-                        <MenuItem onClick={onManageClick}>
-                            {lastPathPart === "manage" ? <strong>My Projects</strong> : "My Projects"}
-                        </MenuItem>
-                    </div>
-                )}
-            </MenuList>
+            <div className={classes.root}>
+                <MenuList>
+                    {teams.map((team: Team) => <MenuItem key={team.id} onClick={() => onSelect(team.id)}>
+                        {lastPathPart === team.id ? <strong>{team.name}</strong> : team.name}
+                    </MenuItem>)}
+                    <Divider style={{ marginTop: "5px", marginBottom: "5px" }} />
+                    <MenuItem onClick={onShowAllClick}>
+                        {lastPathPart === "all" ? <strong>All Projects</strong> : "All Projects"}
+                    </MenuItem>
+                    <Divider style={{ marginTop: "5px", marginBottom: "5px" }} />
+                    {uid && (
+                        <div>
+                            <MenuItem onClick={onAddClick}>
+                                {lastPathPart === "add" ? <strong>Add Project</strong> : "Add Project"}
+                            </MenuItem>
+                            <MenuItem onClick={onManageClick}>
+                                {lastPathPart === "manage" ? <strong>My Projects</strong> : "My Projects"}
+                            </MenuItem>
+                        </div>
+                    )}
+                </MenuList>
+            </div>
         );
-
 }
