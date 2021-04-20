@@ -1,27 +1,5 @@
 # swat-project-portfolio
 
-Empty project.
+This project provides a way for users to post and share projects they are working on at Swarthmore College.
 
-## Building and running on localhost
-
-First install dependencies:
-
-```sh
-npm install
-```
-
-To create a production build:
-
-```sh
-npm run build-prod
-```
-
-To create a development build:
-
-```sh
-npm run build-dev
-```
-
-## Running
-
-Open the file `dist/index.html` in your browser
+Current version: `0.0.1`
