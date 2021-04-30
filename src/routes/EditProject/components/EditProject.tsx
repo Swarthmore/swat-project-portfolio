@@ -9,7 +9,7 @@ import useInput from "../../../hooks/useInput";
 import { RootState } from "../../../store/reducer";
 import { dateString } from "../../../utils";
 import { FormSubmitButton } from "../../../containers/FormSubmitButton/FormSubmitButton";
-import {HOME_PATH, SINGLE_PATH} from "../../../constants/paths";
+import {HOME_PATH, MANAGE_PATH, SINGLE_PATH} from "../../../constants/paths";
 import useSnax from "../../../hooks/useSnax";
 import MD from "react-markdown";
 import {markdownCheat} from "../../AddProject/components/AddProject";
@@ -103,7 +103,7 @@ export default function EditProjectPage() {
             await firestore.update(`projects/${params.id}`, updatedProject)
             resetForm();
             setSnack({ msg: "Project updated", type: "success", open: true })
-            history.push(SINGLE_PATH.replace(":id", params.id));
+            history.push(MANAGE_PATH);
 
         } catch (error) {
             setSnack({ msg: error.toString(), type: "error", open: true })

@@ -5,8 +5,6 @@ import HomeRoute from "./Home";
 import NotFoundRoute from "./NotFound";
 import ProjectsRoute from "./Projects";
 import AddProjectRoute from "./AddProject";
-import ProjectRoute from "./Project";
-import UserRoute from "./User";
 import ManageRoute from "./Manage";
 import EditProjectRoute from "./EditProject";
 import AuthIsLoaded from "../containers/AuthIsLoaded";
@@ -21,8 +19,6 @@ export default function createRoutes() {
                         AddProjectRoute,
                         EditProjectRoute,
                         ProjectsRoute,
-                        ProjectRoute,
-                        UserRoute,
                         ManageRoute
                     ].map((settings: any, i) => <Route key={i} {...settings} />)}
                     <Route component={NotFoundRoute.component} />

@@ -67,9 +67,9 @@ export default function PCard({ project, ...rest }: PCardProps) {
         return date.toLocaleDateString();
     }
 
-    const hasUpdates = project.updates && project.updates.length > 0;
+    const sortedUpdates = (project.updates && project.updates.length > 0) ? sortUpdates(Array.from(project.updates)) : [];
 
-    const firstUpdate = hasUpdates ? project.updates?.[0] : undefined;
+    const firstUpdate = sortedUpdates[0];
 
     return (
 
@@ -117,7 +117,7 @@ export default function PCard({ project, ...rest }: PCardProps) {
 
                 {project.updates && project.updates?.length > 0 && (
                     <Collapse in={isExpanded} timeout="auto" unmountOnExit={true}>
-                        {sortUpdates(Array.from(project.updates)).map(update => (
+                        {sortedUpdates.map(update => (
                            <CardContent key={update.value}>
                                <Typography variant="h6">{parseCreatedOnToDate(update.createdOn)}</Typography>
                                <Typography variant="body2">{update.value}</Typography>
