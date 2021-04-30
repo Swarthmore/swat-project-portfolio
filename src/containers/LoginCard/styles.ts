@@ -6,6 +6,7 @@ export default makeStyles(theme => ({
         top: "20px",
         right: "20px",
         width: "400px",
-        background: theme.palette.background.paper
+        background: theme.palette.background.paper,
+        zIndex: 100
     },
 }))
