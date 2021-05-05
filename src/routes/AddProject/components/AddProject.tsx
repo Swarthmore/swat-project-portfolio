@@ -10,9 +10,7 @@ import { useHistory } from "react-router-dom";
 import useInput from "../../../hooks/useInput";
 import { FormSubmitButton } from "../../../containers/FormSubmitButton/FormSubmitButton";
 import useSnax from "../../../hooks/useSnax";
-import {SINGLE_PATH} from "../../../constants/paths";
-import MD from "react-markdown";
-import gfm from "remark-gfm"
+import {HOME_PATH} from "../../../constants/paths";
 import MarkdownRenderer from "../../../containers/MarkdownRenderer/MarkdownRenderer";
 
 export const markdownCheat = "https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet";
@@ -96,8 +94,7 @@ export default function AddProjectPage() {
             const res = await addProject(project);
             resetForm();
             setSnack({ type: "success", msg: "Project created success", open: true });
-            history.push(SINGLE_PATH.replace(":id", res.id));
-            
+            history.push(HOME_PATH);
         } catch (error) {
             setSnack({ type: "error", msg: error.toString(), open: true });
         }
